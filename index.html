@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>街霸6 代打上分 · 教学 · 对练陪玩</title>
+  <meta name="description" content="街霸6 代打上分 / 游戏教学 / 对练陪玩 在线报价下单">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="site-header">
+    <div class="logo">SF6</div>
+    <div>
+      <h1>街霸6 上分 · 教学 · 对练</h1>
+      <p class="subtitle">填写信息自动报价，下单后联系客服付款</p>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="boost">代打上分</button>
+    <button class="tab-btn" data-tab="coach">游戏教学</button>
+    <button class="tab-btn" data-tab="spar">对练陪玩</button>
+  </nav>
+
+  <main>
+
+    <!-- ==================== 1. 代打上分 ==================== -->
+    <section id="tab-boost" class="tab-panel active">
+      <div class="card">
+        <h2>代打上分</h2>
+
+        <div class="grid-2">
+          <fieldset class="field">
+            <legend>当前分数</legend>
+            <label class="lbl" for="cur-rank">段位</label>
+            <select id="cur-rank" class="select"></select>
+
+            <div id="cur-star-wrap" class="sub-wrap" hidden>
+              <label class="lbl" for="cur-star">段位星数（1~5）</label>
+              <select id="cur-star" class="select"></select>
+            </div>
+
+            <div id="cur-m-wrap" class="sub-wrap" hidden>
+              <label class="lbl" for="cur-m">M分（0~2400）</label>
+              <input id="cur-m" class="input" type="number" min="0" max="2400" step="1"
+                     inputmode="numeric" placeholder="如 1500">
+            </div>
+
+            <p id="cur-hint" class="hint" hidden>未定级：还没打过排位赛</p>
+            <p id="cur-err" class="err" hidden></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>目标分数</legend>
+            <label class="lbl" for="tgt-rank">段位</label>
+            <select id="tgt-rank" class="select"></select>
+
+            <div id="tgt-star-wrap" class="sub-wrap" hidden>
+              <label class="lbl" for="tgt-star">段位星数（1~5）</label>
+              <select id="tgt-star" class="select"></select>
+            </div>
+
+            <div id="tgt-m-wrap" class="sub-wrap" hidden>
+              <label class="lbl" for="tgt-m">M分（0~2400）</label>
+              <input id="tgt-m" class="input" type="number" min="0" max="2400" step="1"
+                     inputmode="numeric" placeholder="不填默认 M1500">
+            </div>
+
+            <button type="button" id="tgt-legend" class="legend-btn">赛季末保传奇拿传奇标</button>
+            <p id="tgt-err" class="err" hidden></p>
+          </fieldset>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="boost-mode">操作模式</label>
+            <select id="boost-mode" class="select">
+              <option value="经典" selected>经典</option>
+              <option value="现代">现代</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="boost-char">角色</label>
+            <select id="boost-char" class="select"></select>
+          </div>
+        </div>
+
+        <div class="quote">
+          <div class="quote-label">预估价格</div>
+          <div class="quote-price" id="boost-price">--</div>
+          <div class="quote-detail" id="boost-detail">请选择段位后自动报价</div>
+          <p class="quote-note">最终价格以客服确认为准</p>
+          <button class="btn-order" id="btn-order-boost" disabled>确认下单</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. 游戏教学 ==================== -->
+    <section id="tab-coach" class="tab-panel">
+      <div class="card">
+        <h2>游戏教学</h2>
+
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="coach-type">教学类型</label>
+            <select id="coach-type" class="select">
+              <option value="段位冲刺指导">段位冲刺指导</option>
+              <option value="角色专项教学">角色专项教学</option>
+              <option value="对局复盘">对局复盘</option>
+              <option value="基础入门">基础入门</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="coach-hours">时长</label>
+            <select id="coach-hours" class="select">
+              <option value="1">1小时</option>
+              <option value="2">2小时</option>
+              <option value="3">3小时</option>
+              <option value="5">5小时</option>
+              <option value="10">10小时</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="coach-mode">操作模式</label>
+            <select id="coach-mode" class="select">
+              <option value="经典" selected>经典</option>
+              <option value="现代">现代</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="coach-char">角色</label>
+            <select id="coach-char" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="coach-rank">当前段位（选填）</label>
+            <select id="coach-rank" class="select"></select>
+          </div>
+        </div>
+
+        <div class="quote">
+          <div class="quote-label">预估价格</div>
+          <div class="quote-price" id="coach-price">--</div>
+          <div class="quote-detail" id="coach-detail"></div>
+          <p class="quote-note">最终价格以客服确认为准</p>
+          <button class="btn-order" id="btn-order-coach">确认下单</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. 对练陪玩 ==================== -->
+    <section id="tab-spar" class="tab-panel">
+      <div class="card">
+        <h2>对练陪玩</h2>
+
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="spar-hours">时长</label>
+            <select id="spar-hours" class="select">
+              <option value="1">1小时</option>
+              <option value="2">2小时</option>
+              <option value="3">3小时</option>
+              <option value="5">5小时</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="spar-mode">操作模式</label>
+            <select id="spar-mode" class="select">
+              <option value="经典" selected>经典</option>
+              <option value="现代">现代</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="spar-char">角色</label>
+            <select id="spar-char" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="spar-rank">当前段位（选填）</label>
+            <select id="spar-rank" class="select"></select>
+          </div>
+        </div>
+
+        <div class="quote">
+          <div class="quote-label">预估价格</div>
+          <div class="quote-price" id="spar-price">--</div>
+          <div class="quote-detail" id="spar-detail"></div>
+          <p class="quote-note">最终价格以客服确认为准</p>
+          <button class="btn-order" id="btn-order-spar">确认下单</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 下单后：联系方式 / 付款 ==================== -->
+    <section id="contact-panel" class="card contact" hidden>
+      <h2>下单成功</h2>
+      <p class="subtitle">请复制订单信息添加客服QQ，付款后开始服务</p>
+
+      <div class="order-summary">
+        <span class="order-summary-label">你的订单</span>
+        <p id="order-text"></p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <h3>联系客服（QQ）</h3>
+          <div class="qq-number" id="qq-number">2748093282</div>
+          <div class="btn-row">
+            <button class="btn" id="btn-copy-qq">复制QQ号</button>
+            <a class="btn" id="qq-link" href="#" target="_blank" rel="noopener">QQ咨询</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <h3>微信收款码</h3>
+          <div class="qr-box" id="wechat-qr-ph">微信收款码<br>（待补充）</div>
+          <img id="wechat-qr-img" class="qr-img" alt="微信收款码" hidden>
+        </div>
+
+        <div class="contact-item">
+          <h3>支付宝收款码</h3>
+          <div class="qr-box" id="alipay-qr-ph">支付宝收款码<br>（待补充）</div>
+          <img id="alipay-qr-img" class="qr-img" alt="支付宝收款码" hidden>
+        </div>
+      </div>
+
+      <button class="btn" id="btn-copy-order">复制订单信息</button>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">客服QQ：2748093282 · 最终价格以客服确认为准</footer>
+</div>
+
+<!-- 弹窗 -->
+<div id="modal" class="modal-mask" hidden>
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3 id="modal-title">提示</h3>
+    <p id="modal-msg"></p>
+    <button class="btn" id="modal-ok">知道了</button>
+  </div>
+</div>
+
+<!--
+  收款码添加说明（顾客看不到）：
+  1. 把微信收款码图片命名为 wechat-qr.png、支付宝收款码命名为 alipay-qr.png，放到 images 文件夹；
+  2. 打开 js/config.js，把 wechatQr 和 alipayQr 改成对应路径即可。
+-->
+
+<script src="js/config.js"></script>
+<script src="js/pricing.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

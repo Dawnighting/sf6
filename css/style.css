@@ -1,0 +1,190 @@
+/* =========================================================
+   街霸6 服务站 样式
+   ========================================================= */
+:root {
+  --bg: #0b0d12;
+  --panel: #141824;
+  --panel-2: #1a2030;
+  --border: #2a3245;
+  --text: #eef1f7;
+  --muted: #98a1b3;
+  --accent: #ff5c35;
+  --accent-2: #ffb03a;
+  --danger: #ff4d5e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(900px 420px at 50% -8%, #232b3d 0%, rgba(35, 43, 61, 0) 60%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.page { max-width: 760px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ---------- 头部 ---------- */
+.site-header { display: flex; align-items: center; gap: 14px; padding: 8px 4px 4px; }
+.logo {
+  width: 54px; height: 54px; border-radius: 14px; flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 20px; letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #160a04; box-shadow: 0 8px 24px rgba(255, 92, 53, 0.25);
+}
+.site-header h1 { font-size: 20px; }
+.subtitle { color: var(--muted); font-size: 13px; }
+
+/* ---------- 选项卡 ---------- */
+.tabs { display: flex; gap: 8px; margin: 18px 0 16px; }
+.tab-btn {
+  flex: 1; padding: 12px 6px; border-radius: 12px; cursor: pointer;
+  background: var(--panel); color: var(--muted); border: 1px solid var(--border);
+  font-size: 15px; font-family: inherit; transition: all 0.15s;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #160a04; font-weight: 700; border-color: transparent;
+}
+
+/* ---------- 面板 ---------- */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card h2 { font-size: 18px; margin-bottom: 14px; }
+
+/* ---------- 表单 ---------- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.lbl { color: var(--muted); font-size: 13px; }
+.select, .input {
+  width: 100%; padding: 11px 12px; border-radius: 10px; min-height: 44px;
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--border); font-size: 15px; font-family: inherit;
+  outline: none;
+}
+.select:focus, .input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 92, 53, 0.15);
+}
+.hint { color: var(--muted); font-size: 12px; }
+.err { color: var(--danger); font-size: 12px; margin-top: 2px; }
+
+.legend-btn {
+  width: 100%; margin-top: 10px; padding: 10px; cursor: pointer;
+  border: 1px dashed var(--border); border-radius: 10px;
+  background: transparent; color: var(--muted);
+  font-size: 13px; font-family: inherit; transition: all 0.15s;
+}
+.legend-btn:hover { color: var(--text); border-color: var(--muted); }
+.legend-btn.active {
+  border-color: var(--accent); border-style: solid;
+  color: var(--accent-2); font-weight: 700;
+  background: rgba(255, 92, 53, 0.08);
+}
+
+fieldset.field {
+  border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 0;
+}
+fieldset.field legend {
+  padding: 0 6px; font-size: 14px; color: var(--text); font-weight: 700;
+}
+
+/* ---------- 报价框 ---------- */
+.quote {
+  margin-top: 6px; text-align: center;
+  border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+  background: linear-gradient(180deg, #1a2030, #141824);
+}
+.quote-label { color: var(--muted); font-size: 13px; letter-spacing: 3px; }
+.quote-price {
+  font-size: 44px; font-weight: 800; margin: 4px 0 2px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.quote-detail { color: var(--muted); font-size: 13px; min-height: 20px; }
+.quote-detail.error { color: var(--danger); }
+.quote-note { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px 16px; border-radius: 10px; cursor: pointer; text-decoration: none;
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+  font-size: 14px; font-family: inherit; transition: background 0.15s;
+}
+.btn:hover { background: #273150; }
+.btn-row { display: flex; gap: 8px; margin-top: 10px; }
+.btn-row .btn { flex: 1; }
+.btn-order {
+  width: 100%; margin-top: 14px; padding: 13px; border: none; cursor: pointer;
+  border-radius: 12px; font-size: 16px; font-weight: 700; font-family: inherit;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #160a04;
+}
+.btn-order:disabled { opacity: 0.38; cursor: not-allowed; }
+
+/* ---------- 联系 / 付款 ---------- */
+.contact h2 { margin-bottom: 4px; }
+.order-summary {
+  margin-top: 12px; background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px; font-size: 14px;
+}
+.order-summary-label { color: var(--muted); font-size: 12px; }
+#order-text { margin-top: 4px; word-break: break-all; }
+.contact-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px; margin-top: 14px;
+}
+.contact-item { text-align: center; }
+.contact-item h3 { font-size: 15px; margin-bottom: 10px; }
+.qq-number { font-size: 26px; font-weight: 800; color: var(--accent-2); letter-spacing: 2px; }
+.qr-box {
+  border: 2px dashed var(--border); border-radius: 12px; height: 150px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 13px; text-align: center; line-height: 1.7;
+}
+.qr-img {
+  width: 150px; height: 150px; object-fit: contain; border-radius: 12px;
+  background: #fff; margin: 0 auto; display: block;
+}
+.contact .btn { margin-top: 14px; width: 100%; }
+
+/* ---------- 页脚 ---------- */
+.site-footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+/* ---------- 弹窗 ---------- */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.66); z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.modal {
+  width: 100%; max-width: 340px; background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: 16px; padding: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.modal h3 { font-size: 17px; margin-bottom: 8px; }
+.modal p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.modal .btn { width: 100%; }
+
+@media (max-width: 620px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .logo { width: 46px; height: 46px; font-size: 17px; }
+  .quote-price { font-size: 38px; }
+  .select, .input { font-size: 14px; }
+}

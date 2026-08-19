@@ -97,11 +97,13 @@
       return {
         ok: true,
         legend: true,
-        price: SITE_CONFIG.legendPrice,
+        price: null,
+        priceMin: SITE_CONFIG.legendPriceMin,
+        priceMax: SITE_CONFIG.legendPriceMax,
         wins: null,
         curText: "—",
         tgtText: SITE_CONFIG.legendLabel,
-        note: "固定价，与当前分数无关",
+        note: SITE_CONFIG.legendNote,
         tooHigh: false
       };
     }
@@ -137,10 +139,14 @@
 
     /* 5. 价格与连胜场数 */
     var price, wins;
-    if (curInfo.order === 100 && tgtInfo.order === 100) {
+    if (input.curRank === "newchallenger" && tgtInfo.order === 80) {
+      /* 未定级 → 钻石：任意星固定价 */
+      price = SITE_CONFIG.newchallengerToDiamondPrice;
+      wins = null;
+    } else if (curInfo.order === 100 && tgtInfo.order === 100) {
       /* 大师 → 大师：按 M 分段计价 */
       price = Math.round(mRateIntegral(curM, tgtM));
-      wins = Math.max(1, Math.round((tgtM - curM) / 100 * SITE_CONFIG.masterPer100Wins));
+      wins = Math.max(1, Math.ceil((tgtM - curM) / SITE_CONFIG.masterMPerWin));
     } else {
       var curRow = tableRow(input.curRank, input.curStar);
       if (!curRow) {
@@ -149,8 +155,9 @@
       if (tgtInfo.order === 100) {
         /* 非大师 → 大师：基础价（到 M1500）+ 超过 1500 的 M 分段 */
         var extra = tgtM > 1500 ? mRateIntegral(1500, tgtM) : 0;
+        var extraWins = tgtM > 1500 ? Math.ceil((tgtM - 1500) / SITE_CONFIG.masterMPerWin) : 0;
         price = Math.round(curRow.price + extra);
-        wins = Math.max(1, Math.round(curRow.wins + (tgtM > 1500 ? (tgtM - 1500) / 100 * SITE_CONFIG.masterPer100Wins : 0)));
+        wins = Math.max(1, curRow.wins + extraWins);
       } else {
         /* 非大师 → 非大师：基础价相减 */
         var tgtRow = tableRow(input.tgtRank, input.tgtStar);

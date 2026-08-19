@@ -98,6 +98,24 @@ body {
   background: rgba(255, 92, 53, 0.08);
 }
 
+/* ---------- 对练陪玩列表 ---------- */
+.player-list { margin-top: 14px; display: grid; gap: 10px; }
+.player-card {
+  border: 1px solid var(--border); border-radius: 12px;
+  background: var(--panel-2); padding: 12px 14px;
+}
+.player-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.player-id { font-size: 16px; font-weight: 800; color: var(--accent-2); }
+.player-mode { font-size: 12px; color: var(--muted); }
+.player-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.chip {
+  font-size: 12px; padding: 4px 10px; border-radius: 999px;
+  background: rgba(255, 92, 53, 0.10); border: 1px solid rgba(255, 92, 53, 0.35);
+  color: var(--text);
+}
+.player-active { font-size: 12px; color: var(--muted); }
+.player-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 12px 0; }
+
 fieldset.field {
   border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 0;
 }

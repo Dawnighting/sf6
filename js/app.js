@@ -85,6 +85,24 @@
     });
   }
 
+  /* 目标段位：当前为未定级时只显示钻石和大师 */
+  function fillTargetRanks() {
+    var sel = $("tgt-rank");
+    var previous = sel.value;
+    sel.innerHTML = "";
+    RANK_ORDER.forEach(function (r) {
+      if (!r.inTarget) return;
+      if ($("cur-rank").value === "newchallenger" && r.order !== 100 && r.order !== 80) return;
+      var opt = document.createElement("option");
+      opt.value = r.value;
+      opt.textContent = r.label;
+      sel.appendChild(opt);
+    });
+    if (previous && Array.prototype.some.call(sel.options, function (o) { return o.value === previous; })) {
+      sel.value = previous;
+    }
+  }
+
   function fillStars(select) {
     select.innerHTML = "";
     for (var i = 1; i <= 5; i++) {
@@ -108,6 +126,17 @@
       });
       select.appendChild(og);
     });
+  }
+
+  /* 对练陪玩：角色筛选默认"全部角色" */
+  function fillSparCharacters() {
+    var sel = $("spar-char");
+    fillCharacters(sel);
+    var empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "全部角色";
+    sel.insertBefore(empty, sel.firstChild);
+    sel.value = "";
   }
 
   /* 教学界面：现代模式只保留配置的角色（默认杰米） */
@@ -147,6 +176,85 @@
       opt.value = r.value;
       opt.textContent = r.label;
       select.appendChild(opt);
+    });
+  }
+
+  /* 对练陪玩：目标段位筛选（不限 / 阈值及以下 / 阈值以上） */
+  function fillSparRankFilter() {
+    var sel = $("spar-rank");
+    sel.innerHTML = "";
+    [
+      { v: "", l: "不限" },
+      { v: "le", l: SITE_CONFIG.sparRankThreshold + "及以下" },
+      { v: "gt", l: SITE_CONFIG.sparRankThreshold + "以上" }
+    ].forEach(function (o) {
+      var opt = document.createElement("option");
+      opt.value = o.v;
+      opt.textContent = o.l;
+      sel.appendChild(opt);
+    });
+  }
+
+  /* ---------- 对练陪玩资料库 ---------- */
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function getSparRankFilter() {
+    var v = $("spar-rank").value;
+    if (v === "le") return { op: "le", threshold: SITE_CONFIG.sparRankThreshold };
+    if (v === "gt") return { op: "gt", threshold: SITE_CONFIG.sparRankThreshold };
+    return null;
+  }
+
+  function playerMatches(player) {
+    var mode = $("spar-mode").value;
+    var char = $("spar-char").value;
+    var rankFilter = getSparRankFilter();
+
+    if (mode && player.mode.indexOf(mode) === -1) return false;
+
+    var matchedChars = char
+      ? player.characters.filter(function (c) { return c.name === char; })
+      : player.characters;
+    if (char && matchedChars.length === 0) return false;
+
+    if (rankFilter) {
+      return matchedChars.some(function (c) {
+        return rankFilter.op === "le" ? c.value <= rankFilter.threshold : c.value > rankFilter.threshold;
+      });
+    }
+    return true;
+  }
+
+  function matchedPlayerIds() {
+    return SITE_CONFIG.sparPlayers.filter(playerMatches).map(function (p) { return p.id; });
+  }
+
+  function renderSparPlayers() {
+    var list = $("spar-player-list");
+    var matched = SITE_CONFIG.sparPlayers.filter(playerMatches);
+    if (matched.length === 0) {
+      list.innerHTML = '<p class="player-empty">暂无匹配的陪玩，可联系客服咨询</p>';
+      return;
+    }
+    list.innerHTML = "";
+    matched.forEach(function (p) {
+      var card = document.createElement("div");
+      card.className = "player-card";
+      var chips = p.characters.map(function (c) {
+        return '<span class="chip">' + escapeHtml(c.name) + " " + escapeHtml(c.rankLabel) + "</span>";
+      }).join("");
+      card.innerHTML =
+        '<div class="player-head">' +
+        '<span class="player-id">' + escapeHtml(p.id) + "</span>" +
+        '<span class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</span>" +
+        "</div>" +
+        '<div class="player-chips">' + chips + "</div>" +
+        '<div class="player-active">活跃时间：' + escapeHtml(p.activeTime) + "</div>";
+      list.appendChild(card);
     });
   }
 
@@ -229,7 +337,8 @@
     $("boost-detail").classList.remove("error");
     $("boost-price").textContent = "¥" + result.price;
     if (result.legend) {
-      $("boost-detail").textContent = result.tgtText + " · 固定价 ¥" + result.price + "（与当前分数无关）";
+      $("boost-price").textContent = "¥" + result.priceMin + "~" + result.priceMax;
+      $("boost-detail").textContent = result.tgtText + " · " + result.note;
     } else {
       $("boost-detail").textContent =
         result.curText + " → " + result.tgtText +
@@ -272,25 +381,17 @@
   }
 
   function updateSparQuote() {
-    var locked = isLocked($("spar-mode").value, $("spar-char").value);
     var priceEl = $("spar-price");
     var detailEl = $("spar-detail");
     var btn = $("btn-order-spar");
 
-    if (locked) {
-      priceEl.textContent = "--";
-      detailEl.textContent = "已停止报价：" + Pricing.LOCK_MSG;
-      detailEl.classList.add("error");
-      btn.disabled = true;
-      alertOnce("spar", "MODERN_LOCKED", Pricing.LOCK_MSG);
-      return;
-    }
-
     lastErrorKey.spar = null;
     detailEl.classList.remove("error");
     var hours = parseInt($("spar-hours").value, 10);
+    var ids = matchedPlayerIds();
     priceEl.textContent = "¥" + hours * SITE_CONFIG.sparPricePerHour;
-    detailEl.textContent = SITE_CONFIG.sparPricePerHour + " 元/小时 × " + hours + " 小时";
+    detailEl.textContent = SITE_CONFIG.sparPricePerHour + " 元/小时 × " + hours + " 小时" +
+      (ids.length ? " ｜ 匹配陪玩：" + ids.join("、") : " ｜ 暂无匹配陪玩");
     btn.disabled = false;
   }
 
@@ -304,7 +405,7 @@
         return "【街霸6代打上分】服务：" + result.tgtText +
           " ｜ 操作模式：" + state.mode +
           " ｜ 角色：" + state.character +
-          " ｜ 固定价：" + result.price + " 元（与当前分数无关）";
+          " ｜ 价格区间：" + result.priceMin + "~" + result.priceMax + " 元（" + result.note + "）";
       }
       return "【街霸6代打上分】当前分数：" + result.curText +
         " ｜ 目标分数：" + result.tgtText +
@@ -325,11 +426,14 @@
     }
 
     if (activeTab === "spar") {
-      var sparRank = $("spar-rank").value ? $("spar-rank").selectedOptions[0].textContent : "";
+      var sparRank = $("spar-rank").value ? $("spar-rank").selectedOptions[0].textContent : "不限";
+      var sparChar = $("spar-char").value ? $("spar-char").selectedOptions[0].textContent : "不限";
+      var ids = matchedPlayerIds();
       return "【街霸6对练陪玩】时长：" + $("spar-hours").value + "小时" +
         " ｜ 操作模式：" + $("spar-mode").value +
-        " ｜ 角色：" + $("spar-char").value +
-        (sparRank ? " ｜ 当前段位：" + sparRank : "") +
+        " ｜ 角色：" + sparChar +
+        " ｜ 目标段位：" + sparRank +
+        " ｜ 匹配陪玩：" + (ids.length ? ids.join("、") : "暂无") +
         " ｜ 预估价格：" + parseInt($("spar-hours").value, 10) * SITE_CONFIG.sparPricePerHour + " 元";
     }
     return "";
@@ -405,6 +509,7 @@
     ["cur", "tgt"].forEach(function (p) {
       $(p + "-rank").addEventListener("change", function () {
         syncRankWidgets();
+        if (p === "cur") fillTargetRanks();
         updateBoostQuote();
       });
       $(p + "-star").addEventListener("change", updateBoostQuote);
@@ -427,8 +532,18 @@
     $("coach-char").addEventListener("change", updateCoachQuote);
 
     $("spar-hours").addEventListener("change", updateSparQuote);
-    $("spar-mode").addEventListener("change", updateSparQuote);
-    $("spar-char").addEventListener("change", updateSparQuote);
+    $("spar-mode").addEventListener("change", function () {
+      renderSparPlayers();
+      updateSparQuote();
+    });
+    $("spar-char").addEventListener("change", function () {
+      renderSparPlayers();
+      updateSparQuote();
+    });
+    $("spar-rank").addEventListener("change", function () {
+      renderSparPlayers();
+      updateSparQuote();
+    });
 
     $("btn-order-boost").addEventListener("click", placeOrder);
     $("btn-order-coach").addEventListener("click", placeOrder);
@@ -450,14 +565,14 @@
   /* ---------- 初始化 ---------- */
   function init() {
     fillRanks($("cur-rank"), true);
-    fillRanks($("tgt-rank"), false);
+    fillTargetRanks();
     fillStars($("cur-star"));
     fillStars($("tgt-star"));
     fillCharacters($("boost-char"));
     fillCoachCharacters();
-    fillCharacters($("spar-char"));
+    fillSparCharacters();
     fillOptionalRanks($("coach-rank"));
-    fillOptionalRanks($("spar-rank"));
+    fillSparRankFilter();
 
     $("cur-rank").value = "newchallenger";
     $("cur-star").value = "3";
@@ -477,6 +592,7 @@
     updateBoostQuote();
     updateCoachQuote();
     updateSparQuote();
+    renderSparPlayers();
   }
 
   if (document.readyState === "loading") {

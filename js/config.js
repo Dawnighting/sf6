@@ -41,18 +41,41 @@
     // 目标 M 分超过该阈值时弹窗提示私聊
     masterTooHighThreshold: 1800,
     masterTooHighPopup: "分数过高请加我qq：2748093282私聊",
-    // 大师 M 分部分的参考连胜场数估算（每 100 分折算几场）
-    masterPer100Wins: 2,
+    // 大师 M 分部分：每 8 M 分折算 1 场连胜。
+    // 例：未定级(12连胜)上大师 M1600 = 12 + 100/8 ≈ 25 连胜
+    masterMPerWin: 8,
 
-    // 赛季末保传奇：固定价（元），与当前分数无关
-    legendPrice: 1110,
+    // 赛季末保传奇：价格区间（元），与当前分数无关
+    legendPriceMin: 1000,
+    legendPriceMax: 1100,
     legendLabel: "赛季末保传奇拿传奇标",
+    legendNote: "具体价格建议联系客服qq2748093282",
 
     // 上分界面：选择"现代"操作模式时，最终价格 × 该倍数（传奇固定价不参与）
     modernPriceMultiplier: 1.5,
 
     // 教学界面：选择"现代"时角色下拉只保留这一个角色
     coachModernOnlyCharacter: "杰米",
+
+    // 未定级 → 钻石（任意星）：固定价（元）
+    newchallengerToDiamondPrice: 22,
+
+    // 对练陪玩：目标段位筛选阈值（M分）
+    sparRankThreshold: 1800,
+
+    // 对练陪玩资料库（可继续往数组里加人）
+    // characters 里 value 是用于筛选的数值：大师写 M 分；其他段位写段位分值（如钻石5=805）
+    sparPlayers: [
+      {
+        id: "cq",
+        mode: ["经典"],
+        characters: [
+          { name: "拉希德", rankLabel: "M2000", value: 2000 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+        ],
+        activeTime: "每晚 20:00 ~ 24:00（可约）"
+      }
+    ],
 
     // 教学 / 对练陪玩 单价（元/小时）
     coachPricePerHour: 60,

@@ -102,6 +102,11 @@
       <div class="card">
         <h2>游戏教学</h2>
 
+        <div class="field">
+          <label class="lbl" for="coach-char-filter">按角色筛选老师</label>
+          <select id="coach-char-filter" class="select"></select>
+        </div>
+
         <div class="player-list-head">
           <span class="player-list-title" id="coach-list-title">老师列表</span>
           <span class="player-list-actions">
@@ -259,8 +264,8 @@
     </div>
 
     <div class="field">
-      <label class="lbl" for="p-active">活跃时间</label>
-      <input id="p-active" class="input" placeholder="如 每晚 20:00 ~ 24:00（可约）">
+      <label class="lbl" for="p-price">对练价格（元/小时）</label>
+      <input id="p-price" class="input" type="number" min="1" step="1" inputmode="numeric" placeholder="如 70">
     </div>
 
     <div class="field">
@@ -299,9 +304,10 @@
         <p class="pd-mode" id="pd-mode"></p>
       </div>
     </div>
-    <p class="pd-active" id="pd-active"></p>
+    <p class="pd-price" id="pd-price"></p>
     <div class="pd-label">使用角色及分段</div>
     <div id="pd-chars"></div>
+    <button class="btn btn-primary" id="pd-select">选择TA对练</button>
     <button class="btn btn-primary" id="pd-close">知道了</button>
   </div>
 </div>
@@ -328,11 +334,6 @@
     <div class="field">
       <label class="lbl" for="t-price">教学价格（元/小时）</label>
       <input id="t-price" class="input" type="number" min="1" step="1" inputmode="numeric" placeholder="如 80">
-    </div>
-
-    <div class="field">
-      <label class="lbl" for="t-active">活跃时间</label>
-      <input id="t-active" class="input" placeholder="如 每晚 20:00 ~ 24:00（可约）">
     </div>
 
     <div class="field">
@@ -377,7 +378,6 @@
         <p class="pd-mode" id="td-mode"></p>
       </div>
     </div>
-    <p class="pd-active" id="td-active"></p>
     <p class="pd-price" id="td-price"></p>
     <div class="pd-label">角色水平</div>
     <div id="td-levels"></div>

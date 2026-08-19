@@ -141,6 +141,26 @@
     sel.value = "";
   }
 
+  /* 教学页角色筛选（全部角色） */
+  function fillCoachCharFilter() {
+    var sel = $("coach-char-filter");
+    fillCharacters(sel);
+    var empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "全部角色";
+    sel.insertBefore(empty, sel.firstChild);
+    sel.value = "";
+  }
+
+  function coachCharMatches(teacher) {
+    var char = $("coach-char-filter").value;
+    if (!char) return true;
+    var teaching = teacher.teachingChars || [];
+    if (teaching.indexOf(char) !== -1) return true;
+    var levels = teacher.levels || teacher.characters || [];
+    return levels.some(function (c) { return c.name === char; });
+  }
+
   function fillOptionalRanks(select) {
     select.innerHTML = "";
     var empty = document.createElement("option");
@@ -172,7 +192,7 @@
 
   function renderCoachTeachers() {
     var list = $("coach-player-list");
-    var teachers = allCoachTeachers();
+    var teachers = allCoachTeachers().filter(coachCharMatches);
     var title = $("coach-list-title");
     if (title) title.textContent = "老师列表（" + teachers.length + " 人）";
     if (teachers.length === 0) {
@@ -181,7 +201,14 @@
       updateCoachQuote();
       return;
     }
-    if (!selectedCoach) selectedCoach = teachers[0];
+    if (!selectedCoach || teachers.indexOf(selectedCoach) === -1) {
+      selectedCoach = teachers[0] || null;
+    }
+    if (!selectedCoach) {
+      list.innerHTML = '<p class="player-empty">没有教这个角色的老师，可联系客服咨询</p>';
+      updateCoachQuote();
+      return;
+    }
     list.innerHTML = "";
     teachers.forEach(function (t) {
       var card = document.createElement("div");
@@ -201,8 +228,7 @@
         '<div class="player-mode">' + escapeHtml(t.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="teacher-teach">教学：' + escapeHtml(t.teachingChars.join("、")) + "</div>" +
-        '<div class="teacher-price">¥' + t.price + "/小时</div>" +
-        '<div class="player-active">' + escapeHtml(t.activeTime) + "</div>";
+        '<div class="teacher-price">¥' + t.price + "/小时</div>";
       card.addEventListener("click", function () {
         openTeacherDetail(t);
       });
@@ -227,7 +253,6 @@
     }
     $("td-id").textContent = t.id;
     $("td-mode").textContent = "操作模式：" + t.mode.join(" / ");
-    $("td-active").textContent = "活跃时间：" + (t.activeTime || "待定");
     $("td-price").textContent = "教学价格：" + t.price + " 元/小时";
 
     var levelsEl = $("td-levels");
@@ -340,6 +365,9 @@
     return groups;
   }
 
+  var selectedSpar = null;
+  var currentPlayerDetail = null;
+
   function renderSparPlayers() {
     var list = $("spar-player-list");
     var matched = allSparPlayers().filter(playerMatches);
@@ -350,10 +378,13 @@
       list.innerHTML = '<p class="player-empty">暂无匹配的打手，可联系客服咨询</p>';
       return;
     }
+    if (!selectedSpar || matched.indexOf(selectedSpar) === -1) {
+      selectedSpar = matched[0];
+    }
     list.innerHTML = "";
     matched.forEach(function (p) {
       var card = document.createElement("div");
-      card.className = "player-card";
+      card.className = "player-card" + (selectedSpar === p ? " player-selected" : "");
       var avatar = escapeHtml(String(p.id || "?").slice(0, 2).toUpperCase());
       var groups = groupChars(p);
       var visible = groups.slice(0, 4);
@@ -369,7 +400,7 @@
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
         '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
-        '<div class="player-active">' + escapeHtml(p.activeTime) + "</div>";
+        '<div class="teacher-price">¥' + (p.price || SITE_CONFIG.sparPricePerHour) + "/小时</div>";
       card.addEventListener("click", function () {
         openPlayerDetail(p);
       });
@@ -379,6 +410,7 @@
 
   /* ---------- 打手详情弹窗 ---------- */
   function openPlayerDetail(p) {
+    currentPlayerDetail = p;
     var box = $("pd-avatar");
     box.innerHTML = "";
     box.className = "player-avatar pd-avatar";
@@ -394,7 +426,7 @@
 
     $("pd-id").textContent = p.id;
     $("pd-mode").textContent = "操作模式：" + p.mode.join(" / ");
-    $("pd-active").textContent = "活跃时间：" + (p.activeTime || "待定");
+    $("pd-price").textContent = "对练价格：" + (p.price || SITE_CONFIG.sparPricePerHour) + " 元/小时";
 
     var charsEl = $("pd-chars");
     charsEl.innerHTML = "";
@@ -452,7 +484,7 @@
   function openPlayerModal() {
     $("p-id").value = "";
     $("p-mode").value = "经典";
-    $("p-active").value = "";
+    $("p-price").value = "";
     $("p-avatar").value = "";
     $("p-avatar-preview").hidden = true;
     $("p-avatar-file").value = "";
@@ -495,11 +527,12 @@
       showModal("提示", "请至少填一个角色的 M 分");
       return;
     }
+    var price = parseInt($("p-price").value, 10);
     extraPlayers.push({
       id: id,
       mode: $("p-mode").value.split(","),
       characters: chars,
-      activeTime: $("p-active").value.trim() || "时间待定",
+      price: Number.isInteger(price) && price > 0 ? price : SITE_CONFIG.sparPricePerHour,
       avatar: $("p-avatar").value.trim() || null
     });
     localStorage.setItem(SPAR_EXTRA_KEY, JSON.stringify(extraPlayers));
@@ -567,7 +600,6 @@
     $("t-id").value = "";
     $("t-mode").value = "经典";
     $("t-price").value = "";
-    $("t-active").value = "";
     $("t-avatar").value = "";
     $("t-avatar-preview").hidden = true;
     $("t-avatar-file").value = "";
@@ -616,7 +648,6 @@
       levels: levels,
       teachingChars: teachingChars,
       price: price,
-      activeTime: $("t-active").value.trim() || "时间待定",
       avatar: $("t-avatar").value.trim() || null
     });
     localStorage.setItem(TEACHER_EXTRA_KEY, JSON.stringify(extraTeachers));
@@ -759,8 +790,15 @@
     detailEl.classList.remove("error");
     var hours = parseInt($("spar-hours").value, 10);
     var ids = matchedPlayerIds();
-    priceEl.textContent = "¥" + hours * SITE_CONFIG.sparPricePerHour;
-    detailEl.textContent = SITE_CONFIG.sparPricePerHour + " 元/小时 × " + hours + " 小时" +
+    if (!selectedSpar) {
+      priceEl.textContent = "--";
+      detailEl.textContent = "暂无匹配陪玩，请联系客服";
+      btn.disabled = true;
+      return;
+    }
+    var rate = selectedSpar.price || SITE_CONFIG.sparPricePerHour;
+    priceEl.textContent = "¥" + hours * rate;
+    detailEl.textContent = selectedSpar.id + " ｜ " + rate + " 元/小时 × " + hours + " 小时" +
       (ids.length ? " ｜ 匹配陪玩：" + ids.join("、") : " ｜ 暂无匹配陪玩");
     btn.disabled = false;
   }
@@ -799,12 +837,14 @@
       var sparRank = $("spar-rank").value ? $("spar-rank").selectedOptions[0].textContent : "不限";
       var sparChar = $("spar-char").value ? $("spar-char").selectedOptions[0].textContent : "不限";
       var ids = matchedPlayerIds();
+      var sparRate = selectedSpar ? (selectedSpar.price || SITE_CONFIG.sparPricePerHour) : SITE_CONFIG.sparPricePerHour;
       return "【街霸6对练陪玩】时长：" + $("spar-hours").value + "小时" +
         " ｜ 操作模式：" + $("spar-mode").value +
         " ｜ 角色：" + sparChar +
         " ｜ 目标段位：" + sparRank +
         " ｜ 匹配陪玩：" + (ids.length ? ids.join("、") : "暂无") +
-        " ｜ 预估价格：" + parseInt($("spar-hours").value, 10) * SITE_CONFIG.sparPricePerHour + " 元";
+        (selectedSpar ? " ｜ 当前选择：" + selectedSpar.id : "") +
+        " ｜ 预估价格：" + parseInt($("spar-hours").value, 10) * sparRate + " 元";
     }
     return "";
   }
@@ -894,6 +934,7 @@
     });
 
     $("coach-hours").addEventListener("change", updateCoachQuote);
+    $("coach-char-filter").addEventListener("change", renderCoachTeachers);
     $("btn-add-teacher").addEventListener("click", openTeacherModal);
     $("btn-add-tlevel").addEventListener("click", function () { addTeacherLevelRow(""); });
     $("btn-add-tchar").addEventListener("click", function () { addTeacherCharRow(""); });
@@ -964,6 +1005,13 @@
       handleAvatarFile(this.files && this.files[0], "p-avatar", "p-avatar-preview");
     });
     $("pd-close").addEventListener("click", function () { $("player-detail-modal").hidden = true; });
+    $("pd-select").addEventListener("click", function () {
+      if (currentPlayerDetail) selectedSpar = currentPlayerDetail;
+      $("player-detail-modal").hidden = true;
+      renderSparPlayers();
+      var quote = document.querySelector('#tab-spar .quote');
+      if (quote) quote.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
     $("player-detail-modal").addEventListener("click", function (e) {
       if (e.target === $("player-detail-modal")) $("player-detail-modal").hidden = true;
     });
@@ -977,6 +1025,7 @@
     fillStars($("tgt-star"));
     fillCharacters($("boost-char"));
     fillSparCharacters();
+    fillCoachCharFilter();
     fillSparRankFilter();
     updateCopyConfigBtn();
     updateCopyTeacherBtn();
@@ -998,8 +1047,8 @@
     syncRankWidgets();
     updateBoostQuote();
     updateCoachQuote();
-    updateSparQuote();
     renderSparPlayers();
+    updateSparQuote();
     renderCoachTeachers();
   }
 

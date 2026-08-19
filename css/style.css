@@ -123,6 +123,7 @@ body {
   display: flex; flex-direction: column; align-items: center;
   text-align: center; overflow: hidden;
   transition: border-color 0.15s, transform 0.15s;
+  cursor: pointer;
 }
 .player-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .player-avatar {
@@ -131,7 +132,9 @@ body {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #160a04; font-size: 22px; font-weight: 900;
   margin-bottom: 8px; box-shadow: 0 6px 18px rgba(255, 92, 53, 0.25);
+  overflow: hidden; position: relative;
 }
+.player-avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .player-id { font-size: 15px; font-weight: 800; color: var(--text); }
 .player-mode { font-size: 11px; color: var(--muted); margin-top: 2px; }
 .player-chips {
@@ -143,6 +146,11 @@ body {
   background: rgba(255, 92, 53, 0.10); border: 1px solid rgba(255, 92, 53, 0.35);
   color: var(--text);
 }
+.chip-match {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent; color: #160a04; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(255, 92, 53, 0.35);
+}
 .chip-more { color: var(--accent-2); border-color: rgba(255, 176, 58, 0.4); }
 .player-active {
   font-size: 10px; color: var(--muted); margin-top: 6px;
@@ -153,6 +161,13 @@ body {
 
 /* ---------- 添加打手弹窗 ---------- */
 .modal-wide { max-width: 440px; max-height: 88vh; overflow-y: auto; }
+.avatar-edit-row { display: flex; gap: 6px; }
+.avatar-edit-row .input { flex: 1; }
+.btn-avatar-file { flex: 0 0 auto; cursor: pointer; }
+.avatar-preview {
+  width: 56px; height: 56px; object-fit: cover; border-radius: 14px;
+  margin-top: 8px; border: 1px solid var(--border);
+}
 .char-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
 .char-row .select { flex: 1.4; }
 .char-row .input { flex: 1; min-height: 40px; }
@@ -164,6 +179,25 @@ body {
 }
 .modal-actions { display: flex; gap: 8px; margin-top: 12px; }
 .modal-actions .btn { flex: 1; }
+
+/* ---------- 打手详情弹窗 ---------- */
+.modal-detail { max-width: 400px; }
+.pd-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.pd-avatar { width: 60px; height: 60px; font-size: 24px; margin: 0; flex: 0 0 auto; }
+.pd-id { font-size: 18px; }
+.pd-mode { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.pd-active { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+.pd-label { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+.pd-char-row {
+  display: flex; gap: 8px; align-items: baseline;
+  padding: 8px 10px; border-radius: 10px; margin-bottom: 6px;
+  background: var(--panel); border: 1px solid var(--border);
+}
+.pd-rank {
+  flex: 0 0 auto; font-size: 13px; font-weight: 800; color: var(--accent-2);
+}
+.pd-names { font-size: 13px; color: var(--text); line-height: 1.6; }
+#pd-close { width: 100%; margin-top: 8px; }
 
 fieldset.field {
   border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 0;

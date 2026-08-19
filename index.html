@@ -275,6 +275,18 @@
     </div>
 
     <div class="field">
+      <label class="lbl" for="p-avatar">头像（选填：图片链接或本地上传）</label>
+      <div class="avatar-edit-row">
+        <input id="p-avatar" class="input" placeholder="https://... 或点右侧上传">
+        <label class="btn btn-small btn-avatar-file">
+          上传图片
+          <input type="file" id="p-avatar-file" accept="image/*" hidden>
+        </label>
+      </div>
+      <img id="p-avatar-preview" class="avatar-preview" alt="头像预览" hidden>
+    </div>
+
+    <div class="field">
       <label class="lbl">角色及分段（M分）</label>
       <div id="p-chars"></div>
       <button type="button" class="btn btn-small" id="btn-add-char">＋ 添加角色</button>
@@ -285,6 +297,23 @@
       <button class="btn btn-primary" id="p-save">加入列表</button>
     </div>
     <p class="hint">加入后在本浏览器可见；要同步到线上，点列表旁的“复制配置”把代码发给我或粘贴到 js/config.js。</p>
+  </div>
+</div>
+
+<!-- 打手详情弹窗 -->
+<div id="player-detail-modal" class="modal-mask" hidden>
+  <div class="modal modal-detail" role="dialog" aria-modal="true">
+    <div class="pd-head">
+      <div class="player-avatar pd-avatar" id="pd-avatar"></div>
+      <div>
+        <h3 class="pd-id" id="pd-id"></h3>
+        <p class="pd-mode" id="pd-mode"></p>
+      </div>
+    </div>
+    <p class="pd-active" id="pd-active"></p>
+    <div class="pd-label">使用角色及分段</div>
+    <div id="pd-chars"></div>
+    <button class="btn btn-primary" id="pd-close">知道了</button>
   </div>
 </div>
 

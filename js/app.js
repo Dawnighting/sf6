@@ -181,14 +181,15 @@
     });
   }
 
-  /* 对练陪玩：目标段位筛选（不限 / 阈值及以下 / 阈值以上） */
+  /* 对练陪玩：目标段位筛选（不限 / 1800及以下 / 1800~2000 / 2000及以上） */
   function fillSparRankFilter() {
     var sel = $("spar-rank");
     sel.innerHTML = "";
     [
       { v: "", l: "不限" },
       { v: "le", l: SITE_CONFIG.sparRankThreshold + "及以下" },
-      { v: "gt", l: SITE_CONFIG.sparRankThreshold + "以上" }
+      { v: "range", l: SITE_CONFIG.sparRankThreshold + "~" + SITE_CONFIG.sparRankThreshold2 },
+      { v: "ge", l: SITE_CONFIG.sparRankThreshold2 + "及以上" }
     ].forEach(function (o) {
       var opt = document.createElement("option");
       opt.value = o.v;
@@ -219,8 +220,17 @@
   function getSparRankFilter() {
     var v = $("spar-rank").value;
     if (v === "le") return { op: "le", threshold: SITE_CONFIG.sparRankThreshold };
-    if (v === "gt") return { op: "gt", threshold: SITE_CONFIG.sparRankThreshold };
+    if (v === "range") return { op: "range", min: SITE_CONFIG.sparRankThreshold, max: SITE_CONFIG.sparRankThreshold2 };
+    if (v === "ge") return { op: "ge", threshold: SITE_CONFIG.sparRankThreshold2 };
     return null;
+  }
+
+  function valueMatches(filter, v) {
+    if (!filter) return true;
+    if (filter.op === "le") return v <= filter.threshold;
+    if (filter.op === "range") return v > filter.min && v <= filter.max;
+    if (filter.op === "ge") return v >= filter.threshold;
+    return true;
   }
 
   function playerMatches(player) {
@@ -236,9 +246,7 @@
     if (char && matchedChars.length === 0) return false;
 
     if (rankFilter) {
-      return matchedChars.some(function (c) {
-        return rankFilter.op === "le" ? c.value <= rankFilter.threshold : c.value > rankFilter.threshold;
-      });
+      return matchedChars.some(function (c) { return valueMatches(rankFilter, c.value); });
     }
     return true;
   }
@@ -247,11 +255,27 @@
     return allSparPlayers().filter(playerMatches).map(function (p) { return p.id; });
   }
 
+  /* 按分段分组：同分段多个角色合并显示（如"多角色 M1800"） */
+  function groupChars(player) {
+    var groups = [];
+    var map = {};
+    player.characters.forEach(function (c) {
+      var key = c.rankLabel;
+      if (!map[key]) {
+        map[key] = { rankLabel: key, value: c.value, names: [] };
+        groups.push(map[key]);
+      }
+      map[key].names.push(c.name);
+    });
+    return groups;
+  }
+
   function renderSparPlayers() {
     var list = $("spar-player-list");
     var matched = allSparPlayers().filter(playerMatches);
     var title = $("player-list-title");
     if (title) title.textContent = "打手列表（匹配 " + matched.length + " 人）";
+    var rankFilter = getSparRankFilter();
     if (matched.length === 0) {
       list.innerHTML = '<p class="player-empty">暂无匹配的打手，可联系客服咨询</p>';
       return;
@@ -261,20 +285,64 @@
       var card = document.createElement("div");
       card.className = "player-card";
       var avatar = escapeHtml(String(p.id || "?").slice(0, 2).toUpperCase());
-      var visible = p.characters.slice(0, 3);
-      var extra = p.characters.length - visible.length;
-      var chips = visible.map(function (c) {
-        return '<span class="chip">' + escapeHtml(c.name) + " " + escapeHtml(c.rankLabel) + "</span>";
+      var groups = groupChars(p);
+      var visible = groups.slice(0, 4);
+      var extra = groups.length - visible.length;
+      var chips = visible.map(function (g) {
+        var label = g.names.length === 1 ? g.names[0] + " " + g.rankLabel : "多角色 " + g.rankLabel;
+        var cls = valueMatches(rankFilter, g.value) ? "chip chip-match" : "chip";
+        return '<span class="' + cls + '">' + escapeHtml(label) + "</span>";
       }).join("");
       if (extra > 0) chips += '<span class="chip chip-more">+' + extra + "</span>";
       card.innerHTML =
-        '<div class="player-avatar">' + avatar + "</div>" +
+        '<div class="player-avatar">' + (p.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(p.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
         '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="player-active">' + escapeHtml(p.activeTime) + "</div>";
+      card.addEventListener("click", function () {
+        openPlayerDetail(p);
+      });
       list.appendChild(card);
     });
+  }
+
+  /* ---------- 打手详情弹窗 ---------- */
+  function openPlayerDetail(p) {
+    var box = $("pd-avatar");
+    box.innerHTML = "";
+    box.className = "player-avatar pd-avatar";
+    if (p.avatar) {
+      var img = document.createElement("img");
+      img.src = p.avatar;
+      img.alt = "";
+      img.className = "player-avatar-img";
+      box.appendChild(img);
+    } else {
+      box.textContent = String(p.id || "?").slice(0, 2).toUpperCase();
+    }
+
+    $("pd-id").textContent = p.id;
+    $("pd-mode").textContent = "操作模式：" + p.mode.join(" / ");
+    $("pd-active").textContent = "活跃时间：" + (p.activeTime || "待定");
+
+    var charsEl = $("pd-chars");
+    charsEl.innerHTML = "";
+    groupChars(p).forEach(function (g) {
+      var row = document.createElement("div");
+      row.className = "pd-char-row";
+      var rank = document.createElement("span");
+      rank.className = "pd-rank";
+      rank.textContent = g.rankLabel;
+      var names = document.createElement("span");
+      names.className = "pd-names";
+      names.textContent = g.names.join("、");
+      row.appendChild(rank);
+      row.appendChild(names);
+      charsEl.appendChild(row);
+    });
+
+    $("player-detail-modal").hidden = false;
   }
 
   /* ---------- 添加打手（本地录入） ---------- */
@@ -315,9 +383,28 @@
     $("p-id").value = "";
     $("p-mode").value = "经典";
     $("p-active").value = "";
+    $("p-avatar").value = "";
+    $("p-avatar-preview").hidden = true;
+    $("p-avatar-file").value = "";
     $("p-chars").innerHTML = "";
     addCharRow("");
     $("player-modal").hidden = false;
+  }
+
+  function handleAvatarFile(file) {
+    if (!file) return;
+    if (file.size > 1.5 * 1024 * 1024) {
+      showModal("提示", "头像图片请小于 1.5MB");
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function () {
+      $("p-avatar").value = reader.result;
+      var preview = $("p-avatar-preview");
+      preview.src = reader.result;
+      preview.hidden = false;
+    };
+    reader.readAsDataURL(file);
   }
 
   function savePlayer() {
@@ -342,7 +429,8 @@
       id: id,
       mode: $("p-mode").value.split(","),
       characters: chars,
-      activeTime: $("p-active").value.trim() || "时间待定"
+      activeTime: $("p-active").value.trim() || "时间待定",
+      avatar: $("p-avatar").value.trim() || null
     });
     localStorage.setItem(SPAR_EXTRA_KEY, JSON.stringify(extraPlayers));
     $("player-modal").hidden = true;
@@ -673,6 +761,13 @@
     });
     $("btn-copy-player-config").addEventListener("click", function () {
       copyText(buildExtraCode(), $("btn-copy-player-config"), "已复制 ✓");
+    });
+    $("p-avatar-file").addEventListener("change", function () {
+      handleAvatarFile(this.files && this.files[0]);
+    });
+    $("pd-close").addEventListener("click", function () { $("player-detail-modal").hidden = true; });
+    $("player-detail-modal").addEventListener("click", function (e) {
+      if (e.target === $("player-detail-modal")) $("player-detail-modal").hidden = true;
     });
   }
 

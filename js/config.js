@@ -60,8 +60,9 @@
     // 未定级 → 钻石（任意星）：固定价（元）
     newchallengerToDiamondPrice: 22,
 
-    // 对练陪玩：目标段位筛选阈值（M分）
+    // 对练陪玩：目标段位筛选阈值（M分）：1800及以下 / 1800~2000 / 2000及以上
     sparRankThreshold: 1800,
+    sparRankThreshold2: 2000,
 
     // 对练陪玩资料库（可继续往数组里加人）
     // characters 里 value 是用于筛选的数值：大师写 M 分；其他段位写段位分值（如钻石5=805）

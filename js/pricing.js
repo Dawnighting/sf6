@@ -14,7 +14,7 @@
   var RANK_ORDER = ctx.RANK_ORDER;
   var PRICE_TABLE = ctx.PRICE_TABLE;
 
-  var LOCK_MSG = "抱歉，这些角色只接经典模式（DJ 达尔西姆 金柏莉 春丽 布兰卡 阿鬼 拉希德）";
+  var LOCK_MSG = "抱歉，这些角色只接经典模式（DJ 达尔西姆 金柏莉 春丽 布兰卡 阿鬼 拉希德 阿里克斯）";
 
   function rankInfo(value) {
     return RANK_ORDER.find(function (r) { return r.value === value; });

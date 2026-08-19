@@ -109,10 +109,6 @@
 
         <div class="player-list-head">
           <span class="player-list-title" id="coach-list-title">老师列表</span>
-          <span class="player-list-actions">
-            <button type="button" class="btn btn-small" id="btn-copy-teacher-config" hidden>复制配置</button>
-            <button type="button" class="btn btn-small btn-primary" id="btn-add-teacher">＋ 添加老师</button>
-          </span>
         </div>
         <div class="player-list" id="coach-player-list"></div>
 
@@ -153,6 +149,8 @@
             <label class="lbl" for="spar-hours">时长</label>
             <select id="spar-hours" class="select">
               <option value="1">1小时</option>
+              <option value="5wins">抢五</option>
+              <option value="10wins">抢十</option>
               <option value="2">2小时</option>
               <option value="3">3小时</option>
               <option value="5">5小时</option>
@@ -177,10 +175,6 @@
 
         <div class="player-list-head">
           <span class="player-list-title" id="player-list-title">打手列表</span>
-          <span class="player-list-actions">
-            <button type="button" class="btn btn-small" id="btn-copy-player-config" hidden>复制配置</button>
-            <button type="button" class="btn btn-small btn-primary" id="btn-add-player">＋ 添加打手</button>
-          </span>
         </div>
         <div class="player-list" id="spar-player-list"></div>
 

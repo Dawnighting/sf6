@@ -80,11 +80,38 @@
           { name: "本田", rankLabel: "M1800", value: 1800 },
           { name: "JP", rankLabel: "M1800", value: 1800 },
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
-          { name: "维加", rankLabel: "M1800", value: 1800 },
+          { name: "维嘉", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
         avatar: "images/cq-avatar.png",
-        price: 70
+        price: 70,
+        priceFirst5: 30,
+        priceFirst10: 50
+      },
+      {
+        id: "cy小师",
+        mode: ["现代", "经典"],
+        characters: [
+          { name: "舞", rankLabel: "M2200", value: 2200, mode: "现代" },
+          { name: "深红毒蛇", rankLabel: "M2200", value: 2200, mode: "现代" },
+          { name: "隆", rankLabel: "M2200", value: 2200, mode: "现代" },
+          { name: "卢克", rankLabel: "M2200", value: 2200, mode: "现代" },
+          { name: "英格丽德", rankLabel: "M2200", value: 2200, mode: "现代" },
+          { name: "肯", rankLabel: "M2100", value: 2100, mode: "现代" },
+          { name: "JP", rankLabel: "M2100", value: 2100, mode: "经典" },
+          { name: "维嘉", rankLabel: "M2000", value: 2000, mode: "现代" },
+          { name: "沙加特", rankLabel: "M2000", value: 2000, mode: "现代" },
+          { name: "豪鬼", rankLabel: "M2000", value: 2000, mode: "现代" },
+          { name: "桑吉尔夫", rankLabel: "M2000", value: 2000, mode: "现代" },
+          { name: "古烈", rankLabel: "M1900", value: 1900, mode: "现代" },
+          { name: "本田", rankLabel: "M1900", value: 1900, mode: "现代" },
+          { name: "艾德", rankLabel: "M1900", value: 1900, mode: "现代" },
+          { name: "DJ", rankLabel: "M1900", value: 1900, mode: "经典" }
+        ],
+        avatar: "images/cy-avatar.jpg",
+        price: 138,
+        priceFirst5: 60,
+        priceFirst10: 100
       }
     ],
 
@@ -120,10 +147,10 @@
           { name: "本田", rankLabel: "M1800", value: 1800 },
           { name: "JP", rankLabel: "M1800", value: 1800 },
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
-          { name: "维加", rankLabel: "M1800", value: 1800 },
+          { name: "维嘉", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
-        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "卢克", "DJ", "艾德", "本田", "JP", "英格丽德", "维加", "沙加特"],
+        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "卢克", "DJ", "艾德", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
         price: 70,
         avatar: "images/cq-avatar.png"
       }
@@ -133,7 +160,7 @@
     sparPricePerHour: 40,
 
     // 经典模式限定角色（选这些角色 + 现代模式 = 不接单）
-    classicOnlyCharacters: ["DJ", "达尔西姆", "金柏莉", "春丽", "布兰卡", "阿鬼", "拉希德"]
+    classicOnlyCharacters: ["DJ", "达尔西姆", "金柏莉", "春丽", "布兰卡", "阿鬼", "拉希德", "阿里克斯"]
   };
 
   /* ---------- 段位（按当前段位下拉的显示顺序排列） ----------

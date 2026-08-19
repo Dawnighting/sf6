@@ -28,7 +28,7 @@
     {
       label: "第二年 DLC",
       names: [
-        { v: "维加", l: "维加" }, { v: "特瑞", l: "特瑞" },
+        { v: "维嘉", l: "维嘉" }, { v: "特瑞", l: "特瑞" },
         { v: "舞", l: "舞" }, { v: "艾莲娜", l: "艾莲娜" }
       ]
     },
@@ -36,7 +36,7 @@
       label: "第三年 DLC",
       names: [
         { v: "沙加特", l: "沙加特" }, { v: "深红毒蛇", l: "深红毒蛇" },
-        { v: "阿里克斯", l: "阿里克斯" }, { v: "英格丽德", l: "英格丽德" }
+        { v: "英格丽德", l: "英格丽德" }
       ]
     },
     {
@@ -49,7 +49,7 @@
         { v: "DJ", l: "DJ（迪杰）" }, { v: "达尔西姆", l: "达尔西姆" },
         { v: "金柏莉", l: "金柏莉" }, { v: "春丽", l: "春丽" },
         { v: "布兰卡", l: "布兰卡" }, { v: "阿鬼", l: "阿鬼" },
-        { v: "拉希德", l: "拉希德" }
+        { v: "拉希德", l: "拉希德" }, { v: "阿里克斯", l: "阿里克斯" }
       ]
     }
   ];
@@ -187,7 +187,7 @@
   var currentTeacherDetail = null;
 
   function allCoachTeachers() {
-    return SITE_CONFIG.coachTeachers.concat(extraTeachers);
+    return SITE_CONFIG.coachTeachers;
   }
 
   function renderCoachTeachers() {
@@ -265,7 +265,7 @@
       rank.textContent = g.rankLabel;
       var names = document.createElement("span");
       names.className = "pd-names";
-      names.textContent = g.names.join("、");
+      names.textContent = g.chars.map(charDisplayName).join("、");
       row.appendChild(rank);
       row.appendChild(names);
       levelsEl.appendChild(row);
@@ -302,7 +302,7 @@
   }
 
   function allSparPlayers() {
-    return SITE_CONFIG.sparPlayers.concat(extraPlayers);
+    return SITE_CONFIG.sparPlayers;
   }
 
   function escapeHtml(s) {
@@ -338,6 +338,10 @@
       ? player.characters.filter(function (c) { return c.name === char; })
       : player.characters;
     if (char && matchedChars.length === 0) return false;
+    /* 角色本身标注了操作模式时，要求与筛选模式一致（如 JP 仅经典） */
+    if (char && mode && matchedChars.some(function (c) { return c.mode && c.mode !== mode; })) {
+      return false;
+    }
 
     if (rankFilter) {
       return matchedChars.some(function (c) { return valueMatches(rankFilter, c.value); });
@@ -357,12 +361,17 @@
     chars.forEach(function (c) {
       var key = c.rankLabel;
       if (!map[key]) {
-        map[key] = { rankLabel: key, value: c.value, names: [] };
+        map[key] = { rankLabel: key, value: c.value, names: [], chars: [] };
         groups.push(map[key]);
       }
       map[key].names.push(c.name);
+      map[key].chars.push(c);
     });
     return groups;
+  }
+
+  function charDisplayName(c) {
+    return c.name + (c.mode ? "（" + c.mode + "）" : "");
   }
 
   var selectedSpar = null;
@@ -438,7 +447,7 @@
       rank.textContent = g.rankLabel;
       var names = document.createElement("span");
       names.className = "pd-names";
-      names.textContent = g.names.join("、");
+      names.textContent = g.chars.map(charDisplayName).join("、");
       row.appendChild(rank);
       row.appendChild(names);
       charsEl.appendChild(row);
@@ -796,10 +805,24 @@
       btn.disabled = true;
       return;
     }
-    var rate = selectedSpar.price || SITE_CONFIG.sparPricePerHour;
-    priceEl.textContent = "¥" + hours * rate;
-    detailEl.textContent = selectedSpar.id + " ｜ " + rate + " 元/小时 × " + hours + " 小时" +
-      (ids.length ? " ｜ 匹配陪玩：" + ids.join("、") : " ｜ 暂无匹配陪玩");
+    var sel = $("spar-hours").value;
+    var priceText, detailText;
+    if (sel === "5wins") {
+      var p5 = selectedSpar.priceFirst5 || 0;
+      priceText = "¥" + p5;
+      detailText = selectedSpar.id + " ｜ 抢五 " + p5 + " 元";
+    } else if (sel === "10wins") {
+      var p10 = selectedSpar.priceFirst10 || 0;
+      priceText = "¥" + p10;
+      detailText = selectedSpar.id + " ｜ 抢十 " + p10 + " 元";
+    } else {
+      var rate = selectedSpar.price || SITE_CONFIG.sparPricePerHour;
+      priceText = "¥" + hours * rate;
+      detailText = selectedSpar.id + " ｜ " + rate + " 元/小时 × " + hours + " 小时";
+    }
+    priceEl.textContent = priceText;
+    detailEl.textContent = detailText +
+      (ids.length ? " ｜ 匹配陪玩：" + ids.join("、") : "");
     btn.disabled = false;
   }
 
@@ -838,13 +861,20 @@
       var sparChar = $("spar-char").value ? $("spar-char").selectedOptions[0].textContent : "不限";
       var ids = matchedPlayerIds();
       var sparRate = selectedSpar ? (selectedSpar.price || SITE_CONFIG.sparPricePerHour) : SITE_CONFIG.sparPricePerHour;
-      return "【街霸6对练陪玩】时长：" + $("spar-hours").value + "小时" +
-        " ｜ 操作模式：" + $("spar-mode").value +
+      var durationLabel = $("spar-hours").selectedOptions[0].textContent;
+      var sparSel = $("spar-hours").value;
+      var sparTotal = sparSel === "5wins"
+        ? (selectedSpar ? (selectedSpar.priceFirst5 || 0) : 0)
+        : sparSel === "10wins"
+          ? (selectedSpar ? (selectedSpar.priceFirst10 || 0) : 0)
+          : parseInt($("spar-hours").value, 10) * sparRate;
+      return "【街霸6对练陪玩】操作模式：" + $("spar-mode").value +
         " ｜ 角色：" + sparChar +
         " ｜ 目标段位：" + sparRank +
         " ｜ 匹配陪玩：" + (ids.length ? ids.join("、") : "暂无") +
         (selectedSpar ? " ｜ 当前选择：" + selectedSpar.id : "") +
-        " ｜ 预估价格：" + parseInt($("spar-hours").value, 10) * sparRate + " 元";
+        " ｜ 时长：" + durationLabel +
+        " ｜ 预估价格：" + sparTotal + " 元";
     }
     return "";
   }
@@ -935,17 +965,6 @@
 
     $("coach-hours").addEventListener("change", updateCoachQuote);
     $("coach-char-filter").addEventListener("change", renderCoachTeachers);
-    $("btn-add-teacher").addEventListener("click", openTeacherModal);
-    $("btn-add-tlevel").addEventListener("click", function () { addTeacherLevelRow(""); });
-    $("btn-add-tchar").addEventListener("click", function () { addTeacherCharRow(""); });
-    $("t-cancel").addEventListener("click", function () { $("teacher-modal").hidden = true; });
-    $("t-save").addEventListener("click", saveTeacher);
-    $("teacher-modal").addEventListener("click", function (e) {
-      if (e.target === $("teacher-modal")) $("teacher-modal").hidden = true;
-    });
-    $("t-avatar-file").addEventListener("change", function () {
-      handleAvatarFile(this.files && this.files[0], "t-avatar", "t-avatar-preview");
-    });
     $("td-select").addEventListener("click", function () {
       if (currentTeacherDetail) selectedCoach = currentTeacherDetail;
       $("teacher-detail-modal").hidden = true;
@@ -956,9 +975,6 @@
     $("td-close").addEventListener("click", function () { $("teacher-detail-modal").hidden = true; });
     $("teacher-detail-modal").addEventListener("click", function (e) {
       if (e.target === $("teacher-detail-modal")) $("teacher-detail-modal").hidden = true;
-    });
-    $("btn-copy-teacher-config").addEventListener("click", function () {
-      copyText(buildTeacherExtraCode(), $("btn-copy-teacher-config"), "已复制 ✓");
     });
 
     $("spar-hours").addEventListener("change", updateSparQuote);
@@ -991,24 +1007,12 @@
       copyText($("order-text").textContent, $("btn-copy-order"), "已复制 ✓");
     });
 
-    $("btn-add-player").addEventListener("click", openPlayerModal);
-    $("btn-add-char").addEventListener("click", function () { addCharRow(""); });
-    $("p-cancel").addEventListener("click", function () { $("player-modal").hidden = true; });
-    $("p-save").addEventListener("click", savePlayer);
-    $("player-modal").addEventListener("click", function (e) {
-      if (e.target === $("player-modal")) $("player-modal").hidden = true;
-    });
-    $("btn-copy-player-config").addEventListener("click", function () {
-      copyText(buildExtraCode(), $("btn-copy-player-config"), "已复制 ✓");
-    });
-    $("p-avatar-file").addEventListener("change", function () {
-      handleAvatarFile(this.files && this.files[0], "p-avatar", "p-avatar-preview");
-    });
     $("pd-close").addEventListener("click", function () { $("player-detail-modal").hidden = true; });
     $("pd-select").addEventListener("click", function () {
       if (currentPlayerDetail) selectedSpar = currentPlayerDetail;
       $("player-detail-modal").hidden = true;
       renderSparPlayers();
+      updateSparQuote();
       var quote = document.querySelector('#tab-spar .quote');
       if (quote) quote.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
@@ -1027,8 +1031,6 @@
     fillSparCharacters();
     fillCoachCharFilter();
     fillSparRankFilter();
-    updateCopyConfigBtn();
-    updateCopyTeacherBtn();
 
     $("cur-rank").value = "newchallenger";
     $("cur-star").value = "3";

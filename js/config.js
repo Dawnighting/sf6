@@ -71,7 +71,19 @@
         mode: ["经典"],
         characters: [
           { name: "拉希德", rankLabel: "M2000", value: 2000 },
-          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 },
+          { name: "肯", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "豪鬼", rankLabel: "M1800", value: 1800 },
+          { name: "杰米", rankLabel: "M1800", value: 1800 },
+          { name: "卢克", rankLabel: "M1800", value: 1800 },
+          { name: "DJ", rankLabel: "M1800", value: 1800 },
+          { name: "艾德", rankLabel: "M1800", value: 1800 },
+          { name: "本田", rankLabel: "M1800", value: 1800 },
+          { name: "JP", rankLabel: "M1800", value: 1800 },
+          { name: "英格丽德", rankLabel: "M1800", value: 1800 },
+          { name: "维加", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
         activeTime: "每晚 20:00 ~ 24:00（可约）"
       }

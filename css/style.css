@@ -98,23 +98,72 @@ body {
   background: rgba(255, 92, 53, 0.08);
 }
 
-/* ---------- 对练陪玩列表 ---------- */
-.player-list { margin-top: 14px; display: grid; gap: 10px; }
-.player-card {
-  border: 1px solid var(--border); border-radius: 12px;
-  background: var(--panel-2); padding: 12px 14px;
+/* ---------- 对练陪玩：方形打手图标网格 ---------- */
+.player-list-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 14px; gap: 8px;
 }
-.player-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.player-id { font-size: 16px; font-weight: 800; color: var(--accent-2); }
-.player-mode { font-size: 12px; color: var(--muted); }
-.player-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.player-list-title { color: var(--muted); font-size: 13px; }
+.player-list-actions { display: flex; gap: 6px; }
+.btn-small { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #160a04; font-weight: 700; border: none;
+}
+.player-list {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.player-card {
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border); border-radius: 16px;
+  background: var(--panel-2); padding: 12px 8px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; overflow: hidden;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.player-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.player-avatar {
+  width: 54px; height: 54px; border-radius: 16px; flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #160a04; font-size: 22px; font-weight: 900;
+  margin-bottom: 8px; box-shadow: 0 6px 18px rgba(255, 92, 53, 0.25);
+}
+.player-id { font-size: 15px; font-weight: 800; color: var(--text); }
+.player-mode { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.player-chips {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 4px; margin-top: 8px;
+}
 .chip {
-  font-size: 12px; padding: 4px 10px; border-radius: 999px;
+  font-size: 10px; padding: 2px 7px; border-radius: 999px;
   background: rgba(255, 92, 53, 0.10); border: 1px solid rgba(255, 92, 53, 0.35);
   color: var(--text);
 }
-.player-active { font-size: 12px; color: var(--muted); }
-.player-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 12px 0; }
+.chip-more { color: var(--accent-2); border-color: rgba(255, 176, 58, 0.4); }
+.player-active {
+  font-size: 10px; color: var(--muted); margin-top: 6px;
+  line-height: 1.4; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.player-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 12px 0; grid-column: 1 / -1; }
+
+/* ---------- 添加打手弹窗 ---------- */
+.modal-wide { max-width: 440px; max-height: 88vh; overflow-y: auto; }
+.char-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+.char-row .select { flex: 1.4; }
+.char-row .input { flex: 1; min-height: 40px; }
+.btn-remove {
+  width: 38px; min-height: 40px; flex: 0 0 auto;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--danger); cursor: pointer;
+  font-size: 16px;
+}
+.modal-actions { display: flex; gap: 8px; margin-top: 12px; }
+.modal-actions .btn { flex: 1; }
 
 fieldset.field {
   border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 0;

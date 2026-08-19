@@ -181,6 +181,13 @@
           </div>
         </div>
 
+        <div class="player-list-head">
+          <span class="player-list-title" id="player-list-title">打手列表</span>
+          <span class="player-list-actions">
+            <button type="button" class="btn btn-small" id="btn-copy-player-config" hidden>复制配置</button>
+            <button type="button" class="btn btn-small btn-primary" id="btn-add-player">＋ 添加打手</button>
+          </span>
+        </div>
         <div class="player-list" id="spar-player-list"></div>
 
         <div class="quote">
@@ -240,6 +247,44 @@
     <h3 id="modal-title">提示</h3>
     <p id="modal-msg"></p>
     <button class="btn" id="modal-ok">知道了</button>
+  </div>
+</div>
+
+<!-- 添加打手弹窗 -->
+<div id="player-modal" class="modal-mask" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true">
+    <h3>添加打手</h3>
+
+    <div class="field">
+      <label class="lbl" for="p-id">ID</label>
+      <input id="p-id" class="input" placeholder="如 cq">
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="p-mode">操作模式</label>
+      <select id="p-mode" class="select">
+        <option value="经典">经典</option>
+        <option value="现代">现代</option>
+        <option value="经典,现代">经典 + 现代</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="p-active">活跃时间</label>
+      <input id="p-active" class="input" placeholder="如 每晚 20:00 ~ 24:00（可约）">
+    </div>
+
+    <div class="field">
+      <label class="lbl">角色及分段（M分）</label>
+      <div id="p-chars"></div>
+      <button type="button" class="btn btn-small" id="btn-add-char">＋ 添加角色</button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" id="p-cancel">取消</button>
+      <button class="btn btn-primary" id="p-save">加入列表</button>
+    </div>
+    <p class="hint">加入后在本浏览器可见；要同步到线上，点列表旁的“复制配置”把代码发给我或粘贴到 js/config.js。</p>
   </div>
 </div>
 

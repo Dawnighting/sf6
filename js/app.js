@@ -85,13 +85,15 @@
     });
   }
 
-  /* 目标段位：当前为未定级时只显示钻石和大师 */
+  /* 目标段位：只显示不低于当前段位的段位；当前为未定级时只显示钻石和大师 */
   function fillTargetRanks() {
     var sel = $("tgt-rank");
     var previous = sel.value;
+    var curInfo = RANK_ORDER.find(function (r) { return r.value === $("cur-rank").value; });
     sel.innerHTML = "";
     RANK_ORDER.forEach(function (r) {
       if (!r.inTarget) return;
+      if (curInfo && r.order < curInfo.order) return;
       if ($("cur-rank").value === "newchallenger" && r.order !== 100 && r.order !== 80) return;
       var opt = document.createElement("option");
       opt.value = r.value;
@@ -196,6 +198,18 @@
   }
 
   /* ---------- 对练陪玩资料库 ---------- */
+  var SPAR_EXTRA_KEY = "sf6_spar_players_extra";
+  var extraPlayers = [];
+  try {
+    extraPlayers = JSON.parse(localStorage.getItem(SPAR_EXTRA_KEY) || "[]") || [];
+  } catch (e) {
+    extraPlayers = [];
+  }
+
+  function allSparPlayers() {
+    return SITE_CONFIG.sparPlayers.concat(extraPlayers);
+  }
+
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -230,32 +244,121 @@
   }
 
   function matchedPlayerIds() {
-    return SITE_CONFIG.sparPlayers.filter(playerMatches).map(function (p) { return p.id; });
+    return allSparPlayers().filter(playerMatches).map(function (p) { return p.id; });
   }
 
   function renderSparPlayers() {
     var list = $("spar-player-list");
-    var matched = SITE_CONFIG.sparPlayers.filter(playerMatches);
+    var matched = allSparPlayers().filter(playerMatches);
+    var title = $("player-list-title");
+    if (title) title.textContent = "打手列表（匹配 " + matched.length + " 人）";
     if (matched.length === 0) {
-      list.innerHTML = '<p class="player-empty">暂无匹配的陪玩，可联系客服咨询</p>';
+      list.innerHTML = '<p class="player-empty">暂无匹配的打手，可联系客服咨询</p>';
       return;
     }
     list.innerHTML = "";
     matched.forEach(function (p) {
       var card = document.createElement("div");
       card.className = "player-card";
-      var chips = p.characters.map(function (c) {
+      var avatar = escapeHtml(String(p.id || "?").slice(0, 2).toUpperCase());
+      var visible = p.characters.slice(0, 3);
+      var extra = p.characters.length - visible.length;
+      var chips = visible.map(function (c) {
         return '<span class="chip">' + escapeHtml(c.name) + " " + escapeHtml(c.rankLabel) + "</span>";
       }).join("");
+      if (extra > 0) chips += '<span class="chip chip-more">+' + extra + "</span>";
       card.innerHTML =
-        '<div class="player-head">' +
-        '<span class="player-id">' + escapeHtml(p.id) + "</span>" +
-        '<span class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</span>" +
-        "</div>" +
+        '<div class="player-avatar">' + avatar + "</div>" +
+        '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
+        '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
-        '<div class="player-active">活跃时间：' + escapeHtml(p.activeTime) + "</div>";
+        '<div class="player-active">' + escapeHtml(p.activeTime) + "</div>";
       list.appendChild(card);
     });
+  }
+
+  /* ---------- 添加打手（本地录入） ---------- */
+  function fillCharacterSelect(sel) {
+    fillCharacters(sel);
+  }
+
+  function addCharRow(charName) {
+    var wrap = $("p-chars");
+    var row = document.createElement("div");
+    row.className = "char-row";
+
+    var sel = document.createElement("select");
+    sel.className = "select p-char";
+    fillCharacterSelect(sel);
+    if (charName) sel.value = charName;
+
+    var inp = document.createElement("input");
+    inp.type = "number";
+    inp.min = "0";
+    inp.max = "2400";
+    inp.className = "input p-rank";
+    inp.placeholder = "M分";
+
+    var rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "btn-remove";
+    rm.textContent = "×";
+    rm.addEventListener("click", function () { row.remove(); });
+
+    row.appendChild(sel);
+    row.appendChild(inp);
+    row.appendChild(rm);
+    wrap.appendChild(row);
+  }
+
+  function openPlayerModal() {
+    $("p-id").value = "";
+    $("p-mode").value = "经典";
+    $("p-active").value = "";
+    $("p-chars").innerHTML = "";
+    addCharRow("");
+    $("player-modal").hidden = false;
+  }
+
+  function savePlayer() {
+    var id = $("p-id").value.trim();
+    if (!id) {
+      showModal("提示", "请填写打手 ID");
+      return;
+    }
+    var chars = [];
+    $("p-chars").querySelectorAll(".char-row").forEach(function (row) {
+      var raw = row.querySelector(".p-rank").value;
+      if (!raw) return;
+      var v = parseInt(raw, 10);
+      if (!Number.isInteger(v) || v < 0 || v > 2400) return;
+      chars.push({ name: row.querySelector(".p-char").value, rankLabel: "M" + v, value: v });
+    });
+    if (chars.length === 0) {
+      showModal("提示", "请至少填一个角色的 M 分");
+      return;
+    }
+    extraPlayers.push({
+      id: id,
+      mode: $("p-mode").value.split(","),
+      characters: chars,
+      activeTime: $("p-active").value.trim() || "时间待定"
+    });
+    localStorage.setItem(SPAR_EXTRA_KEY, JSON.stringify(extraPlayers));
+    $("player-modal").hidden = true;
+    updateCopyConfigBtn();
+    renderSparPlayers();
+    updateSparQuote();
+    showModal("提示", "已加入打手“" + id + "”。要同步到线上，点列表旁的“复制配置”把代码发给我，或自己粘贴到 js/config.js 后推送。");
+  }
+
+  function buildExtraCode() {
+    var parts = extraPlayers.map(function (p) { return JSON.stringify(p, null, 2); });
+    return "// 新增打手（粘贴到 js/config.js 的 sparPlayers 数组里，注意上一项末尾要加逗号）\n" + parts.join(",\n");
+  }
+
+  function updateCopyConfigBtn() {
+    $("btn-copy-player-config").hidden = extraPlayers.length === 0;
   }
 
   /* ---------- 段位控件联动 ---------- */
@@ -560,6 +663,17 @@
     $("btn-copy-order").addEventListener("click", function () {
       copyText($("order-text").textContent, $("btn-copy-order"), "已复制 ✓");
     });
+
+    $("btn-add-player").addEventListener("click", openPlayerModal);
+    $("btn-add-char").addEventListener("click", function () { addCharRow(""); });
+    $("p-cancel").addEventListener("click", function () { $("player-modal").hidden = true; });
+    $("p-save").addEventListener("click", savePlayer);
+    $("player-modal").addEventListener("click", function (e) {
+      if (e.target === $("player-modal")) $("player-modal").hidden = true;
+    });
+    $("btn-copy-player-config").addEventListener("click", function () {
+      copyText(buildExtraCode(), $("btn-copy-player-config"), "已复制 ✓");
+    });
   }
 
   /* ---------- 初始化 ---------- */
@@ -573,6 +687,7 @@
     fillSparCharacters();
     fillOptionalRanks($("coach-rank"));
     fillSparRankFilter();
+    updateCopyConfigBtn();
 
     $("cur-rank").value = "newchallenger";
     $("cur-star").value = "3";

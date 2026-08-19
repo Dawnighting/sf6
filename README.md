@@ -88,6 +88,14 @@
 
 把整个文件夹传到任意静态托管（GitHub Pages、Vercel、Netlify、阿里云 OSS 等）即可，不需要服务器。
 
+推荐 **GitHub Pages**（免费、永久、手机/电脑浏览器都能打开）：
+
+1. 注册一个 GitHub 账号（github.com，免费）；
+2. 装 GitHub CLI（Windows 命令提示符里运行 `winget install GitHub.cli`），然后运行 `gh auth login` 登录；
+3. 告诉我一声，我来创建仓库、推送代码并开启 Pages，最后把网址发给你。
+
+如果你有 Vercel / Netlify / Cloudflare 账号或自己的服务器/OSS，也可以告诉我用哪个。
+
 ## 八、后续做成软件
 
 逻辑层（`js/pricing.js`）已经和页面分离，之后想做微信小程序 / 公众号 / 桌面软件，可以直接复用这套报价逻辑，也可以让我帮你打包成 Windows 桌面版或手机网页版。

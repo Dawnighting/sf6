@@ -153,6 +153,17 @@
         teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "卢克", "DJ", "艾德", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
         price: 70,
         avatar: "images/cq-avatar.png"
+      },
+      {
+        id: "lovebanana（爱香蕉）",
+        mode: ["经典"],
+        levels: [
+          { name: "金柏莉", rankLabel: "M2200", value: 2200 },
+          { name: "曼侬", rankLabel: "M2100", value: 2100 }
+        ],
+        teachingChars: ["金柏莉", "曼侬"],
+        price: 80,
+        avatar: "images/lovebanana-avatar.png"
       }
     ],
 

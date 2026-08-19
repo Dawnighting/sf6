@@ -393,7 +393,7 @@
     list.innerHTML = "";
     matched.forEach(function (p) {
       var card = document.createElement("div");
-      card.className = "player-card" + (selectedSpar === p ? " player-selected" : "");
+      card.className = "player-card coach-card" + (selectedSpar === p ? " player-selected" : "");
       var avatar = escapeHtml(String(p.id || "?").slice(0, 2).toUpperCase());
       var groups = groupChars(p);
       var visible = groups.slice(0, 4);
@@ -409,7 +409,9 @@
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
         '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
-        '<div class="teacher-price">¥' + (p.price || SITE_CONFIG.sparPricePerHour) + "/小时</div>";
+        '<div class="teacher-price">¥' + (p.price || SITE_CONFIG.sparPricePerHour) + "/小时</div>" +
+        '<div class="player-extra-price">抢五 ' + (p.priceFirst5 != null ? p.priceFirst5 : "—") +
+        " ｜ 抢十 " + (p.priceFirst10 != null ? p.priceFirst10 : "—") + " 元</div>";
       card.addEventListener("click", function () {
         openPlayerDetail(p);
       });
@@ -436,6 +438,8 @@
     $("pd-id").textContent = p.id;
     $("pd-mode").textContent = "操作模式：" + p.mode.join(" / ");
     $("pd-price").textContent = "对练价格：" + (p.price || SITE_CONFIG.sparPricePerHour) + " 元/小时";
+    $("pd-extra").textContent = "抢五：" + (p.priceFirst5 != null ? p.priceFirst5 : "—") +
+      " 元 ｜ 抢十：" + (p.priceFirst10 != null ? p.priceFirst10 : "—") + " 元";
 
     var charsEl = $("pd-chars");
     charsEl.innerHTML = "";

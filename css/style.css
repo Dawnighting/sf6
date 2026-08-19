@@ -174,6 +174,9 @@ body {
 .teacher-price {
   font-size: 14px; font-weight: 800; color: var(--accent-2); margin-top: 4px;
 }
+.player-extra-price {
+  font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.4;
+}
 .player-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 12px 0; grid-column: 1 / -1; }
 
 /* ---------- 添加打手弹窗 ---------- */
@@ -205,6 +208,7 @@ body {
 .pd-mode { color: var(--muted); font-size: 12px; margin-top: 2px; }
 .pd-active { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
 .pd-price { color: var(--accent-2); font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.pd-extra { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
 .pd-label { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
 .pd-char-row {
   display: flex; gap: 8px; align-items: baseline;
@@ -238,7 +242,7 @@ fieldset.field legend {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.quote-detail { color: var(--muted); font-size: 13px; min-height: 20px; }
+.quote-detail { color: #c9d2e2; font-size: 14px; min-height: 20px; }
 .quote-detail.error { color: var(--danger); }
 .quote-note { color: var(--muted); font-size: 12px; margin-top: 6px; }
 

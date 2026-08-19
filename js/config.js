@@ -54,9 +54,6 @@
     // 上分界面：选择"现代"操作模式时，最终价格 × 该倍数（传奇固定价不参与）
     modernPriceMultiplier: 1.5,
 
-    // 教学界面：选择"现代"时角色下拉只保留这一个角色
-    coachModernOnlyCharacter: "杰米",
-
     // 未定级 → 钻石（任意星）：固定价（元）
     newchallengerToDiamondPrice: 22,
 
@@ -90,8 +87,26 @@
       }
     ],
 
-    // 教学 / 对练陪玩 单价（元/小时）
-    coachPricePerHour: 60,
+    /* ---------- 教学老师资料库（可继续往数组里加人） ----------
+       levels = 角色水平（每个角色的段位/M分，value 用于数值比较）
+       teachingChars = 教学角色
+       price = 教学价格（元/小时） */
+    coachTeachers: [
+      {
+        id: "老师A（样例）",
+        mode: ["经典", "现代"],
+        levels: [
+          { name: "隆", rankLabel: "M2000", value: 2000 },
+          { name: "肯", rankLabel: "M1800", value: 1800 },
+          { name: "卢克", rankLabel: "M1800", value: 1800 }
+        ],
+        teachingChars: ["隆", "肯", "卢克"],
+        price: 80,
+        activeTime: "每晚 20:00 ~ 24:00（可约）"
+      }
+    ],
+
+    // 对练陪玩 单价（元/小时）
     sparPricePerHour: 40,
 
     // 经典模式限定角色（选这些角色 + 现代模式 = 不接单）

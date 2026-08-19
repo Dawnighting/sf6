@@ -102,18 +102,18 @@
       <div class="card">
         <h2>游戏教学</h2>
 
+        <div class="player-list-head">
+          <span class="player-list-title" id="coach-list-title">老师列表</span>
+          <span class="player-list-actions">
+            <button type="button" class="btn btn-small" id="btn-copy-teacher-config" hidden>复制配置</button>
+            <button type="button" class="btn btn-small btn-primary" id="btn-add-teacher">＋ 添加老师</button>
+          </span>
+        </div>
+        <div class="player-list" id="coach-player-list"></div>
+
         <div class="grid-2">
           <div class="field">
-            <label class="lbl" for="coach-type">教学类型</label>
-            <select id="coach-type" class="select">
-              <option value="段位冲刺指导">段位冲刺指导</option>
-              <option value="角色专项教学">角色专项教学</option>
-              <option value="对局复盘">对局复盘</option>
-              <option value="基础入门">基础入门</option>
-            </select>
-          </div>
-          <div class="field">
-            <label class="lbl" for="coach-hours">时长</label>
+            <label class="lbl" for="coach-hours">教学时长</label>
             <select id="coach-hours" class="select">
               <option value="1">1小时</option>
               <option value="2">2小时</option>
@@ -123,19 +123,8 @@
             </select>
           </div>
           <div class="field">
-            <label class="lbl" for="coach-mode">操作模式</label>
-            <select id="coach-mode" class="select">
-              <option value="经典" selected>经典</option>
-              <option value="现代">现代</option>
-            </select>
-          </div>
-          <div class="field">
-            <label class="lbl" for="coach-char">角色</label>
-            <select id="coach-char" class="select"></select>
-          </div>
-          <div class="field">
-            <label class="lbl" for="coach-rank">当前段位（选填）</label>
-            <select id="coach-rank" class="select"></select>
+            <label class="lbl">当前选择老师</label>
+            <p id="coach-selected" class="hint">点老师卡片查看详情并选择</p>
           </div>
         </div>
 
@@ -144,7 +133,7 @@
           <div class="quote-price" id="coach-price">--</div>
           <div class="quote-detail" id="coach-detail"></div>
           <p class="quote-note">最终价格以客服确认为准</p>
-          <button class="btn-order" id="btn-order-coach">确认下单</button>
+          <button class="btn-order" id="btn-order-coach" disabled>确认下单</button>
         </div>
       </div>
     </section>
@@ -314,6 +303,88 @@
     <div class="pd-label">使用角色及分段</div>
     <div id="pd-chars"></div>
     <button class="btn btn-primary" id="pd-close">知道了</button>
+  </div>
+</div>
+
+<!-- 添加老师弹窗 -->
+<div id="teacher-modal" class="modal-mask" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true">
+    <h3>添加老师</h3>
+
+    <div class="field">
+      <label class="lbl" for="t-id">ID / 称呼</label>
+      <input id="t-id" class="input" placeholder="如 老师A">
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="t-mode">操作模式</label>
+      <select id="t-mode" class="select">
+        <option value="经典">经典</option>
+        <option value="现代">现代</option>
+        <option value="经典,现代">经典 + 现代</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="t-price">教学价格（元/小时）</label>
+      <input id="t-price" class="input" type="number" min="1" step="1" inputmode="numeric" placeholder="如 80">
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="t-active">活跃时间</label>
+      <input id="t-active" class="input" placeholder="如 每晚 20:00 ~ 24:00（可约）">
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="t-avatar">头像（选填：图片链接或本地上传）</label>
+      <div class="avatar-edit-row">
+        <input id="t-avatar" class="input" placeholder="https://... 或点右侧上传">
+        <label class="btn btn-small btn-avatar-file">
+          上传图片
+          <input type="file" id="t-avatar-file" accept="image/*" hidden>
+        </label>
+      </div>
+      <img id="t-avatar-preview" class="avatar-preview" alt="头像预览" hidden>
+    </div>
+
+    <div class="field">
+      <label class="lbl">角色水平（角色 + M分）</label>
+      <div id="t-levels"></div>
+      <button type="button" class="btn btn-small" id="btn-add-tlevel">＋ 添加角色水平</button>
+    </div>
+
+    <div class="field">
+      <label class="lbl">教学角色（可教哪些角色）</label>
+      <div id="t-chars"></div>
+      <button type="button" class="btn btn-small" id="btn-add-tchar">＋ 添加教学角色</button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" id="t-cancel">取消</button>
+      <button class="btn btn-primary" id="t-save">加入列表</button>
+    </div>
+    <p class="hint">加入后在本浏览器可见；要同步到线上，点列表旁的“复制配置”把代码发给我或粘贴到 js/config.js。</p>
+  </div>
+</div>
+
+<!-- 老师详情弹窗 -->
+<div id="teacher-detail-modal" class="modal-mask" hidden>
+  <div class="modal modal-detail" role="dialog" aria-modal="true">
+    <div class="pd-head">
+      <div class="player-avatar pd-avatar" id="td-avatar"></div>
+      <div>
+        <h3 class="pd-id" id="td-id"></h3>
+        <p class="pd-mode" id="td-mode"></p>
+      </div>
+    </div>
+    <p class="pd-active" id="td-active"></p>
+    <p class="pd-price" id="td-price"></p>
+    <div class="pd-label">角色水平</div>
+    <div id="td-levels"></div>
+    <div class="pd-label">教学角色</div>
+    <p class="pd-names" id="td-characters"></p>
+    <button class="btn btn-primary" id="td-select">选择TA教学</button>
+    <button class="btn" id="td-close">取消</button>
   </div>
 </div>
 

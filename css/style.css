@@ -113,7 +113,7 @@ body {
 .player-list {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   gap: 10px;
 }
 .player-card {
@@ -126,6 +126,15 @@ body {
   cursor: pointer;
 }
 .player-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.player-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255, 92, 53, 0.25);
+}
+.coach-card {
+  aspect-ratio: auto;
+  min-height: 215px;
+  justify-content: flex-start;
+}
 .player-avatar {
   width: 54px; height: 54px; border-radius: 16px; flex: 0 0 auto;
   display: flex; align-items: center; justify-content: center;
@@ -157,6 +166,14 @@ body {
   line-height: 1.4; overflow: hidden; display: -webkit-box;
   -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
+.teacher-teach {
+  font-size: 10px; color: var(--muted); margin-top: 6px;
+  line-height: 1.4; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.teacher-price {
+  font-size: 14px; font-weight: 800; color: var(--accent-2); margin-top: 4px;
+}
 .player-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 12px 0; grid-column: 1 / -1; }
 
 /* ---------- 添加打手弹窗 ---------- */
@@ -187,6 +204,7 @@ body {
 .pd-id { font-size: 18px; }
 .pd-mode { color: var(--muted); font-size: 12px; margin-top: 2px; }
 .pd-active { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+.pd-price { color: var(--accent-2); font-size: 14px; font-weight: 700; margin-bottom: 10px; }
 .pd-label { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
 .pd-char-row {
   display: flex; gap: 8px; align-items: baseline;
@@ -198,6 +216,8 @@ body {
 }
 .pd-names { font-size: 13px; color: var(--text); line-height: 1.6; }
 #pd-close { width: 100%; margin-top: 8px; }
+#td-select { width: 100%; margin-top: 8px; }
+#td-close { width: 100%; margin-top: 8px; }
 
 fieldset.field {
   border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 0;

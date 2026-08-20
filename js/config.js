@@ -32,7 +32,7 @@
     //   [1700,1800)  1.0 元/分
     //   [1800,2400]  1.3 元/分（超过 2000 的部分暂按 1.3 元/分计）
     masterMRate: [
-      { upTo: 1500, rate: 0.4 },
+      { upTo: 1500, rate: 0.3 },
       { upTo: 1600, rate: 0.6 },
       { upTo: 1700, rate: 0.8 },
       { upTo: 1800, rate: 1.0 },
@@ -76,7 +76,7 @@
           { name: "杰米", rankLabel: "M1800", value: 1800 },
           { name: "卢克", rankLabel: "M1800", value: 1800 },
           { name: "DJ", rankLabel: "M1800", value: 1800 },
-          { name: "艾德", rankLabel: "M1800", value: 1800 },
+          { name: "ED", rankLabel: "M1800", value: 1800 },
           { name: "本田", rankLabel: "M1800", value: 1800 },
           { name: "JP", rankLabel: "M1800", value: 1800 },
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
@@ -105,7 +105,7 @@
           { name: "桑吉尔夫", rankLabel: "M2000", value: 2000, mode: "现代" },
           { name: "古烈", rankLabel: "M1900", value: 1900, mode: "现代" },
           { name: "本田", rankLabel: "M1900", value: 1900, mode: "现代" },
-          { name: "艾德", rankLabel: "M1900", value: 1900, mode: "现代" },
+          { name: "ED", rankLabel: "M1900", value: 1900, mode: "现代" },
           { name: "DJ", rankLabel: "M1900", value: 1900, mode: "经典" }
         ],
         avatar: "images/cy-avatar.jpg",
@@ -178,7 +178,7 @@
           { name: "卢克", rankLabel: "M1700", value: 1700 },
           { name: "嘉米", rankLabel: "M1700", value: 1700 },
           { name: "特瑞", rankLabel: "M1700", value: 1700 },
-          { name: "艾德", rankLabel: "M1700", value: 1700 },
+          { name: "ED", rankLabel: "M1700", value: 1700 },
           { name: "维嘉", rankLabel: "M1700", value: 1700 },
           { name: "阿里克斯", rankLabel: "M1700", value: 1700 },
           { name: "沙加特", rankLabel: "M1700", value: 1700 },
@@ -206,6 +206,23 @@
         ],
         price: 80,
         avatar: "images/langgou-avatar.jfif"
+      },
+      {
+        id: "Dible",
+        mode: ["经典"],
+        characters: [
+          { name: "ED", rankLabel: "M2300", value: 2300 },
+          { name: "艾莲娜", rankLabel: "M2200", value: 2200 },
+          { name: "舞", rankLabel: "M2200", value: 2200 },
+          { name: "杰米", rankLabel: "M2200", value: 2200 },
+          { name: "特瑞", rankLabel: "M2200", value: 2200 },
+          { name: "隆", rankLabel: "M2100", value: 2100 },
+          { name: "布兰卡", rankLabel: "M2100", value: 2100 },
+          { name: "英格丽德", rankLabel: "M2100", value: 2100 },
+          { name: "传奇随机", rankLabel: "M2000+", value: 2000 }
+        ],
+        price: 150,
+        avatar: "images/dible-avatar.jfif"
       }
     ],
 
@@ -226,14 +243,14 @@
           { name: "杰米", rankLabel: "M1800", value: 1800 },
           { name: "卢克", rankLabel: "M1800", value: 1800 },
           { name: "DJ", rankLabel: "M1800", value: 1800 },
-          { name: "艾德", rankLabel: "M1800", value: 1800 },
+          { name: "ED", rankLabel: "M1800", value: 1800 },
           { name: "本田", rankLabel: "M1800", value: 1800 },
           { name: "JP", rankLabel: "M1800", value: 1800 },
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
           { name: "维嘉", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
-        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "卢克", "DJ", "艾德", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
+        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "卢克", "DJ", "ED", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
         price: 70,
         avatar: "images/cq-avatar.png"
       },
@@ -325,6 +342,24 @@
         teachingChars: ["杰米", "金柏莉", "拉希德", "英格丽德", "舞", "亚思敏", "豪鬼", "隆", "特瑞", "维嘉"],
         price: 80,
         avatar: "images/langgou-avatar.jfif"
+      },
+      {
+        id: "Dible",
+        mode: ["经典"],
+        levels: [
+          { name: "ED", rankLabel: "M2300", value: 2300 },
+          { name: "艾莲娜", rankLabel: "M2200", value: 2200 },
+          { name: "舞", rankLabel: "M2200", value: 2200 },
+          { name: "杰米", rankLabel: "M2200", value: 2200 },
+          { name: "特瑞", rankLabel: "M2200", value: 2200 },
+          { name: "隆", rankLabel: "M2100", value: 2100 },
+          { name: "布兰卡", rankLabel: "M2100", value: 2100 },
+          { name: "英格丽德", rankLabel: "M2100", value: 2100 },
+          { name: "传奇随机", rankLabel: "M2000+", value: 2000 }
+        ],
+        teachingChars: ["ED", "艾莲娜", "舞", "杰米", "特瑞", "隆", "布兰卡", "英格丽德"],
+        price: 150,
+        avatar: "images/dible-avatar.jfif"
       }
     ],
 
@@ -332,7 +367,8 @@
     sparPricePerHour: 40,
 
     /* 小时订单满时长折扣：小时数 → 优惠比例（原价减） */
-    hourDiscounts: { 2: 0.10, 3: 0.20, 4: 0.30 },
+    /* 小时订单满时长折扣：2小时-10% / 3小时-15% / 4小时及以上-25% */
+    hourDiscounts: { 2: 0.10, 3: 0.15, 4: 0.25, 5: 0.25, 10: 0.25 },
 
     /* 优惠券兑换码：客户在页面上输入 code 即可领取并自动抵扣。
        percent = 折后价比例（0.9 即 9 折）；threshold = 满 X 元可用 */

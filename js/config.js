@@ -112,6 +112,22 @@
         price: 138,
         priceFirst5: 60,
         priceFirst10: 100
+      },
+      {
+        id: "l石膏王",
+        mode: ["经典"],
+        characters: [
+          { name: "拉希德", rankLabel: "M2300", value: 2300 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "英格丽德", rankLabel: "M1800", value: 1800 },
+          { name: "阿里克斯", rankLabel: "M1800", value: 1800 },
+          { name: "卢克", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+        ],
+        price: 100,
+        priceFirst3: 40,
+        priceFirst5: 60
       }
     ],
 
@@ -164,6 +180,21 @@
         teachingChars: ["金柏莉", "曼侬"],
         price: 80,
         avatar: "images/lovebanana-avatar.png"
+      },
+      {
+        id: "l石膏王",
+        mode: ["经典"],
+        levels: [
+          { name: "拉希德", rankLabel: "M2300", value: 2300 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "英格丽德", rankLabel: "M1800", value: 1800 },
+          { name: "阿里克斯", rankLabel: "M1800", value: 1800 },
+          { name: "卢克", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+        ],
+        teachingChars: ["拉希德", "阿里克斯", "亚思敏"],
+        price: 100
       }
     ],
 

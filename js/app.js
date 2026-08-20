@@ -377,6 +377,25 @@
   var selectedSpar = null;
   var currentPlayerDetail = null;
 
+  /* 时长下拉：按打手提供的服务动态生成（1小时 + 抢三/抢五/抢十 + 2/3/5小时） */
+  function fillSparHours(player) {
+    var sel = $("spar-hours");
+    var prev = sel.value;
+    var opts = [{ v: "1", l: "1小时" }];
+    if (player && player.priceFirst3 != null) opts.push({ v: "3wins", l: "抢三" });
+    if (player && player.priceFirst5 != null) opts.push({ v: "5wins", l: "抢五" });
+    if (player && player.priceFirst10 != null) opts.push({ v: "10wins", l: "抢十" });
+    opts.push({ v: "2", l: "2小时" }, { v: "3", l: "3小时" }, { v: "5", l: "5小时" });
+    sel.innerHTML = "";
+    opts.forEach(function (o) {
+      var opt = document.createElement("option");
+      opt.value = o.v;
+      opt.textContent = o.l;
+      sel.appendChild(opt);
+    });
+    sel.value = opts.some(function (o) { return o.v === prev; }) ? prev : "1";
+  }
+
   function renderSparPlayers() {
     var list = $("spar-player-list");
     var matched = allSparPlayers().filter(playerMatches);
@@ -390,6 +409,7 @@
     if (!selectedSpar || matched.indexOf(selectedSpar) === -1) {
       selectedSpar = matched[0];
     }
+    fillSparHours(selectedSpar);
     list.innerHTML = "";
     matched.forEach(function (p) {
       var card = document.createElement("div");
@@ -404,14 +424,20 @@
         return '<span class="' + cls + '">' + escapeHtml(label) + "</span>";
       }).join("");
       if (extra > 0) chips += '<span class="chip chip-more">+' + extra + "</span>";
+      var extras = [];
+      if (p.priceFirst3 != null) extras.push("抢三 " + p.priceFirst3);
+      if (p.priceFirst5 != null) extras.push("抢五 " + p.priceFirst5);
+      if (p.priceFirst10 != null) extras.push("抢十 " + p.priceFirst10);
+      var extraLine = extras.length
+        ? '<div class="player-extra-price">' + extras.join(" ｜ ") + " 元</div>"
+        : "";
       card.innerHTML =
         '<div class="player-avatar">' + (p.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(p.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
         '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="teacher-price">¥' + (p.price || SITE_CONFIG.sparPricePerHour) + "/小时</div>" +
-        '<div class="player-extra-price">抢五 ' + (p.priceFirst5 != null ? p.priceFirst5 : "—") +
-        " ｜ 抢十 " + (p.priceFirst10 != null ? p.priceFirst10 : "—") + " 元</div>";
+        extraLine;
       card.addEventListener("click", function () {
         openPlayerDetail(p);
       });
@@ -438,8 +464,11 @@
     $("pd-id").textContent = p.id;
     $("pd-mode").textContent = "操作模式：" + p.mode.join(" / ");
     $("pd-price").textContent = "对练价格：" + (p.price || SITE_CONFIG.sparPricePerHour) + " 元/小时";
-    $("pd-extra").textContent = "抢五：" + (p.priceFirst5 != null ? p.priceFirst5 : "—") +
-      " 元 ｜ 抢十：" + (p.priceFirst10 != null ? p.priceFirst10 : "—") + " 元";
+    var extras = [];
+    if (p.priceFirst3 != null) extras.push("抢三：" + p.priceFirst3 + " 元");
+    if (p.priceFirst5 != null) extras.push("抢五：" + p.priceFirst5 + " 元");
+    if (p.priceFirst10 != null) extras.push("抢十：" + p.priceFirst10 + " 元");
+    $("pd-extra").textContent = extras.join(" ｜ ");
 
     var charsEl = $("pd-chars");
     charsEl.innerHTML = "";
@@ -811,7 +840,11 @@
     }
     var sel = $("spar-hours").value;
     var priceText, detailText;
-    if (sel === "5wins") {
+    if (sel === "3wins") {
+      var p3 = selectedSpar.priceFirst3 || 0;
+      priceText = "¥" + p3;
+      detailText = selectedSpar.id + " ｜ 抢三 " + p3 + " 元";
+    } else if (sel === "5wins") {
       var p5 = selectedSpar.priceFirst5 || 0;
       priceText = "¥" + p5;
       detailText = selectedSpar.id + " ｜ 抢五 " + p5 + " 元";
@@ -825,8 +858,7 @@
       detailText = selectedSpar.id + " ｜ " + rate + " 元/小时 × " + hours + " 小时";
     }
     priceEl.textContent = priceText;
-    detailEl.textContent = detailText +
-      (ids.length ? " ｜ 匹配陪玩：" + ids.join("、") : "");
+    detailEl.textContent = detailText;
     btn.disabled = false;
   }
 
@@ -863,19 +895,19 @@
     if (activeTab === "spar") {
       var sparRank = $("spar-rank").value ? $("spar-rank").selectedOptions[0].textContent : "不限";
       var sparChar = $("spar-char").value ? $("spar-char").selectedOptions[0].textContent : "不限";
-      var ids = matchedPlayerIds();
       var sparRate = selectedSpar ? (selectedSpar.price || SITE_CONFIG.sparPricePerHour) : SITE_CONFIG.sparPricePerHour;
       var durationLabel = $("spar-hours").selectedOptions[0].textContent;
       var sparSel = $("spar-hours").value;
-      var sparTotal = sparSel === "5wins"
-        ? (selectedSpar ? (selectedSpar.priceFirst5 || 0) : 0)
-        : sparSel === "10wins"
-          ? (selectedSpar ? (selectedSpar.priceFirst10 || 0) : 0)
-          : parseInt($("spar-hours").value, 10) * sparRate;
+      var sparTotal = sparSel === "3wins"
+        ? (selectedSpar ? (selectedSpar.priceFirst3 || 0) : 0)
+        : sparSel === "5wins"
+          ? (selectedSpar ? (selectedSpar.priceFirst5 || 0) : 0)
+          : sparSel === "10wins"
+            ? (selectedSpar ? (selectedSpar.priceFirst10 || 0) : 0)
+            : parseInt($("spar-hours").value, 10) * sparRate;
       return "【街霸6对练陪玩】操作模式：" + $("spar-mode").value +
         " ｜ 角色：" + sparChar +
         " ｜ 目标段位：" + sparRank +
-        " ｜ 匹配陪玩：" + (ids.length ? ids.join("、") : "暂无") +
         (selectedSpar ? " ｜ 当前选择：" + selectedSpar.id : "") +
         " ｜ 时长：" + durationLabel +
         " ｜ 预估价格：" + sparTotal + " 元";

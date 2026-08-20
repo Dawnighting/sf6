@@ -127,7 +127,9 @@
           { name: "沙加特", rankLabel: "M1800", value: 1800 },
           { name: "亚思敏", rankLabel: "M1800", value: 1800 }
         ],
-        price: 100
+        price: 100,
+        priceFirst5: 30,
+        priceFirst10: 60
       },
       {
         id: "昕缘刀妹",

@@ -155,18 +155,6 @@
 
         <div class="grid-2">
           <div class="field">
-            <label class="lbl" for="spar-hours">时长</label>
-            <select id="spar-hours" class="select">
-              <option value="1">1小时</option>
-              <option value="5wins">抢五</option>
-              <option value="10wins">抢十</option>
-              <option value="2">2小时</option>
-              <option value="3">3小时</option>
-              <option value="4">4小时</option>
-              <option value="5">5小时</option>
-            </select>
-          </div>
-          <div class="field">
             <label class="lbl" for="spar-mode">操作模式</label>
             <select id="spar-mode" class="select">
               <option value="经典" selected>经典</option>
@@ -187,6 +175,25 @@
           <span class="player-list-title" id="player-list-title">打手列表</span>
         </div>
         <div class="player-list" id="spar-player-list"></div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="spar-hours">时长</label>
+            <select id="spar-hours" class="select">
+              <option value="1">1小时</option>
+              <option value="5wins">抢五</option>
+              <option value="10wins">抢十</option>
+              <option value="2">2小时</option>
+              <option value="3">3小时</option>
+              <option value="4">4小时</option>
+              <option value="5">5小时</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl">当前选择打手</label>
+            <p id="spar-selected" class="hint">点打手卡片查看详情并选择</p>
+          </div>
+        </div>
 
         <div class="coupon-box">
           <div class="coupon-row">

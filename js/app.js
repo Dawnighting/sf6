@@ -927,6 +927,8 @@
       btn.disabled = true;
       return;
     }
+    $("spar-selected").textContent = selectedSpar.id +
+      (selectedSpar.price != null ? "（" + selectedSpar.price + " 元/小时）" : "（小时价待定）");
     var sel = $("spar-hours").value;
     var basePrice, detailParts;
     if (sel === "3wins") {

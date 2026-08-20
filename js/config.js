@@ -171,7 +171,8 @@
           { name: "肯", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
-        price: 70
+        price: 70,
+        avatar: "images/daosikesi-avatar.png"
       },
       {
         id: "BB06",
@@ -190,9 +191,10 @@
           { name: "英格丽德", rankLabel: "M1700", value: 1700 },
           { name: "杰米", rankLabel: "M1700", value: 1700 }
         ],
-        price: null,
+        price: 60,
         priceFirst5: 40,
-        priceFirst10: 70
+        priceFirst10: 70,
+        avatar: "images/bb06-avatar.jpg"
       },
       {
         id: "超究极混沌暗影之狼狗",
@@ -399,7 +401,8 @@
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
         teachingChars: ["本田", "维嘉", "舞", "肯", "沙加特"],
-        price: 70
+        price: 70,
+        avatar: "images/daosikesi-avatar.png"
       },
       {
         id: "超究极混沌暗影之狼狗",

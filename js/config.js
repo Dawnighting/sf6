@@ -150,6 +150,8 @@
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
         price: 70,
+        priceFirst5: 30,
+        priceFirst10: 50,
         avatar: "images/xinyuan-avatar.jfif"
       },
       {

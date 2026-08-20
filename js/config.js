@@ -240,7 +240,7 @@
         price: 100,
         priceFirst5: 30,
         priceFirst10: 60,
-        priceNote: "抢五/抢十需赛后复盘 +10 元",
+        priceNote: "+10元可复盘对局",
         sortPriority: 0,
         avatar: "images/xialuote-avatar.jfif"
       }

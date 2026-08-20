@@ -139,10 +139,13 @@
           { name: "隆", rankLabel: "M1800", value: 1800 },
           { name: "肯", rankLabel: "M1800", value: 1800 },
           { name: "特瑞", rankLabel: "M1800", value: 1800 },
-          { name: "沙加特", rankLabel: "M1800", value: 1800 },
-          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 },
+          { name: "朱莉", rankLabel: "M1800", value: 1800 },
+          { name: "豪鬼", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
-        price: 70
+        price: 70,
+        avatar: "images/xinyuan-avatar.jfif"
       },
       {
         id: "一切终将逝去",
@@ -155,7 +158,7 @@
       },
       {
         id: "道斯克斯",
-        mode: ["经典", "现代"],
+        mode: ["经典"],
         characters: [
           { name: "本田", rankLabel: "M2100", value: 2100 },
           { name: "维嘉", rankLabel: "M2100", value: 2100 },
@@ -167,7 +170,7 @@
       },
       {
         id: "BB06",
-        mode: ["经典", "现代"],
+        mode: ["经典"],
         characters: [
           { name: "肯", rankLabel: "M1950", value: 1950 },
           { name: "豪鬼", rankLabel: "M1700", value: 1700 },
@@ -185,6 +188,24 @@
         price: null,
         priceFirst5: 40,
         priceFirst10: 70
+      },
+      {
+        id: "超究极混沌暗影之狼狗",
+        mode: ["经典"],
+        characters: [
+          { name: "杰米", rankLabel: "M2250", value: 2250 },
+          { name: "金柏莉", rankLabel: "M2100", value: 2100 },
+          { name: "拉希德", rankLabel: "M2000", value: 2000 },
+          { name: "英格丽德", rankLabel: "M1900", value: 1900 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 },
+          { name: "豪鬼", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "特瑞", rankLabel: "M1700", value: 1700 },
+          { name: "维嘉", rankLabel: "M1700", value: 1700 }
+        ],
+        price: 80,
+        avatar: "images/langgou-avatar.jfif"
       }
     ],
 
@@ -254,11 +275,14 @@
           { name: "隆", rankLabel: "M1800", value: 1800 },
           { name: "肯", rankLabel: "M1800", value: 1800 },
           { name: "特瑞", rankLabel: "M1800", value: 1800 },
-          { name: "沙加特", rankLabel: "M1800", value: 1800 },
-          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 },
+          { name: "朱莉", rankLabel: "M1800", value: 1800 },
+          { name: "豪鬼", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
         teachingChars: ["杰米", "艾莲娜"],
-        price: 70
+        price: 70,
+        avatar: "images/xinyuan-avatar.jfif"
       },
       {
         id: "一切终将逝去",
@@ -272,7 +296,7 @@
       },
       {
         id: "道斯克斯",
-        mode: ["经典", "现代"],
+        mode: ["经典"],
         levels: [
           { name: "本田", rankLabel: "M2100", value: 2100 },
           { name: "维嘉", rankLabel: "M2100", value: 2100 },

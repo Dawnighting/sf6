@@ -197,18 +197,13 @@
     var title = $("coach-list-title");
     if (title) title.textContent = "老师列表（" + teachers.length + " 人）";
     if (teachers.length === 0) {
-      list.innerHTML = '<p class="player-empty">暂无老师，可点右上角“添加老师”或联系客服</p>';
+      list.innerHTML = '<p class="player-empty">暂无匹配的老师，可联系客服咨询</p>';
       selectedCoach = null;
       updateCoachQuote();
       return;
     }
-    if (!selectedCoach || teachers.indexOf(selectedCoach) === -1) {
-      selectedCoach = teachers[0] || null;
-    }
-    if (!selectedCoach) {
-      list.innerHTML = '<p class="player-empty">没有教这个角色的老师，可联系客服咨询</p>';
-      updateCoachQuote();
-      return;
+    if (selectedCoach && teachers.indexOf(selectedCoach) === -1) {
+      selectedCoach = null;
     }
     list.innerHTML = "";
     teachers.forEach(function (t) {
@@ -398,6 +393,7 @@
     var sel = $("spar-hours");
     var prev = sel.value;
     var opts = [];
+    if (!player) opts.push({ v: "", l: "请先选择打手" });
     if (player && player.price != null) opts.push({ v: "1", l: "1小时" });
     if (player && player.priceFirst3 != null) opts.push({ v: "3wins", l: "抢三" });
     if (player && player.priceFirst5 != null) opts.push({ v: "5wins", l: "抢五" });
@@ -433,8 +429,8 @@
       list.innerHTML = '<p class="player-empty">暂无匹配的打手，可联系客服咨询</p>';
       return;
     }
-    if (!selectedSpar || matched.indexOf(selectedSpar) === -1) {
-      selectedSpar = matched[0];
+    if (selectedSpar && matched.indexOf(selectedSpar) === -1) {
+      selectedSpar = null;
     }
     fillSparHours(selectedSpar);
     list.innerHTML = "";
@@ -926,7 +922,7 @@
     detailEl.classList.remove("error");
     if (!selectedCoach) {
       priceEl.textContent = "--";
-      detailEl.textContent = "暂无老师，请联系客服";
+      detailEl.textContent = "请先选择一位老师";
       btn.disabled = true;
       return;
     }
@@ -953,7 +949,7 @@
     detailEl.classList.remove("error");
     if (!selectedSpar) {
       priceEl.textContent = "--";
-      detailEl.textContent = "暂无匹配陪玩，请联系客服";
+      detailEl.textContent = "请先选择一位打手";
       btn.disabled = true;
       return;
     }

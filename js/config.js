@@ -243,6 +243,38 @@
         priceNote: "+10元可复盘对局",
         sortPriority: 0,
         avatar: "images/xialuote-avatar.jfif"
+      },
+      {
+        id: "奈欧Neo",
+        mode: ["经典"],
+        characters: [
+          { name: "沙加特", rankLabel: "M2200", value: 2200 },
+          { name: "维嘉", rankLabel: "M2200", value: 2200 },
+          { name: "隆", rankLabel: "M2200", value: 2200 },
+          { name: "豪鬼", rankLabel: "M2100", value: 2100 },
+          { name: "肯", rankLabel: "M2000", value: 2000 },
+          { name: "卢克", rankLabel: "M2000", value: 2000 },
+          { name: "特瑞", rankLabel: "M2000", value: 2000 },
+          { name: "ED", rankLabel: "M1900", value: 1900 },
+          { name: "英格丽德", rankLabel: "M1900", value: 1900 },
+          { name: "亚思敏", rankLabel: "M1900", value: 1900 }
+        ],
+        price: 90,
+        priceFirst5: 50,
+        priceFirst10: 80,
+        avatar: "images/neo-avatar.jpg"
+      },
+      {
+        id: "大吉",
+        mode: ["经典"],
+        characters: [
+          { name: "肯", rankLabel: "M2100", value: 2100 },
+          { name: "特瑞", rankLabel: "M1900", value: 1900 }
+        ],
+        price: 100,
+        priceFirst5: 50,
+        priceFirst10: 80,
+        avatar: "images/daji-avatar.png"
       }
     ],
 
@@ -391,6 +423,36 @@
         teachingChars: ["杰米"],
         price: 100,
         avatar: "images/xialuote-avatar.jfif"
+      },
+      {
+        id: "奈欧Neo",
+        mode: ["经典"],
+        levels: [
+          { name: "沙加特", rankLabel: "M2200", value: 2200 },
+          { name: "维嘉", rankLabel: "M2200", value: 2200 },
+          { name: "隆", rankLabel: "M2200", value: 2200 },
+          { name: "豪鬼", rankLabel: "M2100", value: 2100 },
+          { name: "肯", rankLabel: "M2000", value: 2000 },
+          { name: "卢克", rankLabel: "M2000", value: 2000 },
+          { name: "特瑞", rankLabel: "M2000", value: 2000 },
+          { name: "ED", rankLabel: "M1900", value: 1900 },
+          { name: "英格丽德", rankLabel: "M1900", value: 1900 },
+          { name: "亚思敏", rankLabel: "M1900", value: 1900 }
+        ],
+        teachingChars: ["沙加特", "维嘉", "隆", "豪鬼", "肯", "卢克", "特瑞", "ED", "英格丽德", "亚思敏"],
+        price: 90,
+        avatar: "images/neo-avatar.jpg"
+      },
+      {
+        id: "大吉",
+        mode: ["经典"],
+        levels: [
+          { name: "肯", rankLabel: "M2100", value: 2100 },
+          { name: "特瑞", rankLabel: "M1900", value: 1900 }
+        ],
+        teachingChars: ["肯"],
+        price: 100,
+        avatar: "images/daji-avatar.png"
       }
     ],
 

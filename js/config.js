@@ -235,11 +235,13 @@
         id: "德州夏洛特",
         mode: ["经典"],
         characters: [
-          { name: "杰米", rankLabel: "M2200", value: 2200 }
+          { name: "杰米", rankLabel: "M2250", value: 2250 }
         ],
         price: 100,
-        priceFirst5: 40,
-        priceFirst10: 80,
+        priceFirst5: 30,
+        priceFirst10: 60,
+        priceNote: "抢五/抢十需赛后复盘 +10 元",
+        sortPriority: 0,
         avatar: "images/xialuote-avatar.jfif"
       }
     ],
@@ -384,7 +386,7 @@
         id: "德州夏洛特",
         mode: ["经典"],
         levels: [
-          { name: "杰米", rankLabel: "M2200", value: 2200 }
+          { name: "杰米", rankLabel: "M2250", value: 2250 }
         ],
         teachingChars: ["杰米"],
         price: 100,

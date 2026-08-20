@@ -421,7 +421,10 @@
     matched.sort(function (a, b) {
       var pa = a.price == null ? Infinity : a.price;
       var pb = b.price == null ? Infinity : b.price;
-      return pa - pb;
+      if (pa !== pb) return pa - pb;
+      var ra = a.sortPriority != null ? a.sortPriority : 1;
+      var rb = b.sortPriority != null ? b.sortPriority : 1;
+      return ra - rb;
     });
     var title = $("player-list-title");
     if (title) title.textContent = "打手列表（匹配 " + matched.length + " 人）";
@@ -456,13 +459,17 @@
       var extraLine = extras.length
         ? '<div class="player-extra-price">' + extras.join(" ｜ ") + " 元</div>"
         : "";
+      var noteLine = p.priceNote
+        ? '<div class="player-note">' + escapeHtml(p.priceNote) + "</div>"
+        : "";
       card.innerHTML =
         '<div class="player-avatar">' + (p.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(p.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
         '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="teacher-price">' + (p.price != null ? "¥" + p.price + "/小时" : "小时价待定") + "</div>" +
-        extraLine;
+        extraLine +
+        noteLine;
       card.addEventListener("click", function () {
         openPlayerDetail(p);
       });
@@ -496,6 +503,7 @@
     if (p.priceFirst5 != null) extras.push("抢五：" + p.priceFirst5 + " 元");
     if (p.priceFirst10 != null) extras.push("抢十：" + p.priceFirst10 + " 元");
     $("pd-extra").textContent = extras.join(" ｜ ");
+    $("pd-note").textContent = p.priceNote || "";
 
     var charsEl = $("pd-chars");
     charsEl.innerHTML = "";
@@ -1193,7 +1201,6 @@
       copyText($("order-text").textContent, $("btn-copy-order"), "已复制 ✓");
     });
 
-    $("pd-close").addEventListener("click", function () { $("player-detail-modal").hidden = true; });
     $("pd-select").addEventListener("click", function () {
       if (currentPlayerDetail) selectedSpar = currentPlayerDetail;
       $("player-detail-modal").hidden = true;

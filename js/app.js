@@ -156,9 +156,10 @@
     var char = $("coach-char-filter").value;
     if (!char) return true;
     var teaching = teacher.teachingChars || [];
-    if (teaching.indexOf(char) !== -1) return true;
-    var levels = teacher.levels || teacher.characters || [];
-    return levels.some(function (c) { return c.name === char; });
+    if (teaching.length === 0) {
+      teaching = (teacher.levels || teacher.characters || []).map(function (c) { return c.name; });
+    }
+    return teaching.indexOf(char) !== -1;
   }
 
   function fillOptionalRanks(select) {

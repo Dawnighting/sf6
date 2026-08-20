@@ -126,6 +126,23 @@
           { name: "亚思敏", rankLabel: "M1800", value: 1800 }
         ],
         price: 100
+      },
+      {
+        id: "昕缘刀妹",
+        mode: ["经典", "现代"],
+        characters: [
+          { name: "杰米", rankLabel: "M1900", value: 1900 },
+          { name: "艾莲娜", rankLabel: "M1900", value: 1900 },
+          { name: "卢克", rankLabel: "M1800", value: 1800 },
+          { name: "嘉米", rankLabel: "M1800", value: 1800 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "肯", rankLabel: "M1800", value: 1800 },
+          { name: "特瑞", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+        ],
+        price: 60
       }
     ],
 
@@ -134,17 +151,6 @@
        teachingChars = 教学角色
        price = 教学价格（元/小时） */
     coachTeachers: [
-      {
-        id: "老师A（样例）",
-        mode: ["经典", "现代"],
-        levels: [
-          { name: "隆", rankLabel: "M2000", value: 2000 },
-          { name: "肯", rankLabel: "M1800", value: 1800 },
-          { name: "卢克", rankLabel: "M1800", value: 1800 }
-        ],
-        teachingChars: ["隆", "肯", "卢克"],
-        price: 80
-      },
       {
         id: "cq",
         mode: ["经典"],
@@ -193,6 +199,24 @@
         ],
         teachingChars: ["拉希德", "阿里克斯", "亚思敏"],
         price: 100
+      },
+      {
+        id: "昕缘刀妹",
+        mode: ["经典", "现代"],
+        levels: [
+          { name: "杰米", rankLabel: "M1900", value: 1900 },
+          { name: "艾莲娜", rankLabel: "M1900", value: 1900 },
+          { name: "卢克", rankLabel: "M1800", value: 1800 },
+          { name: "嘉米", rankLabel: "M1800", value: 1800 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "肯", rankLabel: "M1800", value: 1800 },
+          { name: "特瑞", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 }
+        ],
+        teachingChars: ["杰米", "艾莲娜"],
+        price: 60
       }
     ],
 

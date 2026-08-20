@@ -225,7 +225,7 @@
       card.innerHTML =
         '<div class="player-avatar">' + (t.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(t.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(t.id) + "</div>" +
-        '<div class="player-mode">' + escapeHtml(t.mode.join(" / ")) + "</div>" +
+        '<div class="player-mode">' + modeHtml(t.mode) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         teachLine +
         '<div class="teacher-price">¥' + t.price + "/小时</div>";
@@ -320,6 +320,13 @@
   /* 默认头像文字：优先用 avatarLabel（如"逝去"），否则取 ID 前两个字 */
   function defaultAvatarText(item) {
     return String((item.avatarLabel || item.id || "?")).slice(0, 2).toUpperCase();
+  }
+
+  /* 操作模式显示："现代"用红色高亮 */
+  function modeHtml(modes) {
+    return modes.map(function (m) {
+      return m === "现代" ? '<span class="mode-modern">现代</span>' : escapeHtml(m);
+    }).join(" / ");
   }
 
   function getSparRankFilter() {
@@ -461,7 +468,7 @@
       card.innerHTML =
         '<div class="player-avatar">' + (p.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(p.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
-        '<div class="player-mode">' + escapeHtml(p.mode.join(" / ")) + "</div>" +
+        '<div class="player-mode">' + modeHtml(p.mode) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="teacher-price">' + (p.price != null ? "¥" + p.price + "/小时" : "小时价待定") + "</div>" +
         extraLine +
@@ -1205,6 +1212,7 @@
       var quote = document.querySelector('#tab-spar .quote');
       if (quote) quote.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
+    $("pd-cancel").addEventListener("click", function () { $("player-detail-modal").hidden = true; });
     $("player-detail-modal").addEventListener("click", function (e) {
       if (e.target === $("player-detail-modal")) $("player-detail-modal").hidden = true;
     });

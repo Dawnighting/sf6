@@ -130,6 +130,11 @@
       }
     }
 
+    /* 当前不是大师、目标为大师时，目标 M 分不能低于 1500 */
+    if (curInfo.order !== 100 && tgtInfo.order === 100 && tgtM !== null && tgtM < 1500) {
+      return { ok: false, code: "M_TOO_LOW", field: "tgt", message: "分数不能低于1500" };
+    }
+
     /* 4. 目标必须大于当前（红字提示，不弹窗） */
     var curScore = pointScore(input.curRank, input.curStar, curM);
     var tgtScore = pointScore(input.tgtRank, input.tgtStar, tgtM);

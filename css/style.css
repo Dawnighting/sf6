@@ -146,6 +146,7 @@ body {
 .player-avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .player-id { font-size: 15px; font-weight: 800; color: var(--text); }
 .player-mode { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.mode-modern { color: var(--danger); font-weight: 700; }
 .player-chips {
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 4px; margin-top: 8px;

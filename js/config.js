@@ -114,7 +114,7 @@
         priceFirst10: 100
       },
       {
-        id: "l石膏王",
+        id: "石膏王",
         mode: ["经典"],
         characters: [
           { name: "拉希德", rankLabel: "M2300", value: 2300 },
@@ -125,9 +125,7 @@
           { name: "沙加特", rankLabel: "M1800", value: 1800 },
           { name: "亚思敏", rankLabel: "M1800", value: 1800 }
         ],
-        price: 100,
-        priceFirst3: 40,
-        priceFirst5: 60
+        price: 100
       }
     ],
 
@@ -182,7 +180,7 @@
         avatar: "images/lovebanana-avatar.png"
       },
       {
-        id: "l石膏王",
+        id: "石膏王",
         mode: ["经典"],
         levels: [
           { name: "拉希德", rankLabel: "M2300", value: 2300 },
@@ -200,6 +198,18 @@
 
     // 对练陪玩 单价（元/小时）
     sparPricePerHour: 40,
+
+    /* 小时订单满时长折扣：小时数 → 优惠比例（原价减） */
+    hourDiscounts: { 2: 0.10, 3: 0.20, 4: 0.30 },
+
+    /* 优惠券兑换码：客户在页面上输入 code 即可领取并自动抵扣。
+       percent = 折后价比例（0.9 即 9 折）；threshold = 满 X 元可用 */
+    coupons: [
+      { code: "SF6-9ZHE", label: "9折优惠券", type: "percent", percent: 0.9, note: "全场9折" },
+      { code: "SF6-100-10", label: "满100减10", type: "threshold", threshold: 100, value: 10, note: "满100可用" },
+      { code: "SF6-200-30", label: "满200减30", type: "threshold", threshold: 200, value: 30, note: "满200可用" },
+      { code: "SF6-XR8", label: "新人8折券", type: "percent", percent: 0.8, note: "仅限第一次下单" }
+    ],
 
     // 经典模式限定角色（选这些角色 + 现代模式 = 不接单）
     classicOnlyCharacters: ["DJ", "达尔西姆", "金柏莉", "春丽", "布兰卡", "阿鬼", "拉希德", "阿里克斯"]

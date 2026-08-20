@@ -385,7 +385,7 @@
     if (player && player.priceFirst3 != null) opts.push({ v: "3wins", l: "抢三" });
     if (player && player.priceFirst5 != null) opts.push({ v: "5wins", l: "抢五" });
     if (player && player.priceFirst10 != null) opts.push({ v: "10wins", l: "抢十" });
-    opts.push({ v: "2", l: "2小时" }, { v: "3", l: "3小时" }, { v: "5", l: "5小时" });
+    opts.push({ v: "2", l: "2小时" }, { v: "3", l: "3小时" }, { v: "4", l: "4小时" }, { v: "5", l: "5小时" });
     sel.innerHTML = "";
     opts.forEach(function (o) {
       var opt = document.createElement("option");
@@ -803,6 +803,79 @@
   }
 
   /* ---------- 教学 / 对练陪玩报价 ---------- */
+  /* ---------- 优惠券 ---------- */
+  var COUPON_KEY = "sf6_redeemed_coupon";
+
+  function getRedeemedCoupon() {
+    var code = localStorage.getItem(COUPON_KEY);
+    if (!code) return null;
+    return SITE_CONFIG.coupons.find(function (c) { return c.code === code; }) || null;
+  }
+
+  function redeemCoupon(code) {
+    var c = SITE_CONFIG.coupons.find(function (x) { return x.code === code; });
+    if (!c) return { ok: false, msg: "兑换码无效，请检查后重试" };
+    if (localStorage.getItem(COUPON_KEY) === code) {
+      return { ok: false, msg: "这张优惠券已经领取过了" };
+    }
+    localStorage.setItem(COUPON_KEY, code);
+    return { ok: true, msg: "领取成功：" + c.label + (c.note ? "（" + c.note + "）" : "") };
+  }
+
+  function applyCoupon(basePrice) {
+    var c = getRedeemedCoupon();
+    if (!c) return { price: basePrice, text: "" };
+    if (c.type === "percent") {
+      var newP = Math.max(0, Math.round(basePrice * c.percent));
+      var saved = basePrice - newP;
+      return { price: newP, text: saved > 0 ? "优惠券" + c.label + " -" + saved + " 元" : "优惠券" + c.label };
+    }
+    if (c.type === "threshold") {
+      if (basePrice >= c.threshold) {
+        var np = Math.max(0, basePrice - c.value);
+        return { price: np, text: "优惠券" + c.label + " -" + (basePrice - np) + " 元" };
+      }
+      return { price: basePrice, text: "优惠券" + c.label + "（未满 " + c.threshold + " 元）" };
+    }
+    return { price: basePrice, text: "" };
+  }
+
+  function refreshCouponStatus() {
+    ["spar", "coach"].forEach(function (s) {
+      var el = $("coupon-status-" + s);
+      var c = getRedeemedCoupon();
+      if (c) {
+        el.textContent = "已领取：" + c.label + (c.note ? "（" + c.note + "）" : "");
+        el.classList.remove("coupon-error");
+        el.classList.add("coupon-ok");
+      } else {
+        el.textContent = "";
+        el.classList.remove("coupon-ok", "coupon-error");
+      }
+    });
+  }
+
+  function handleRedeem(section) {
+    var input = $("coupon-input-" + section);
+    var status = $("coupon-status-" + section);
+    var code = input.value.trim();
+    if (!code) {
+      status.textContent = "请输入兑换码";
+      status.classList.add("coupon-error");
+      return;
+    }
+    var r = redeemCoupon(code);
+    status.textContent = r.msg;
+    status.classList.toggle("coupon-error", !r.ok);
+    status.classList.toggle("coupon-ok", r.ok);
+    if (r.ok) {
+      input.value = "";
+      refreshCouponStatus();
+    }
+    updateSparQuote();
+    updateCoachQuote();
+  }
+
   function updateCoachQuote() {
     var priceEl = $("coach-price");
     var detailEl = $("coach-detail");
@@ -818,8 +891,15 @@
     }
     var hours = parseInt($("coach-hours").value, 10);
     $("coach-selected").textContent = selectedCoach.id + "（" + selectedCoach.price + " 元/小时）";
-    priceEl.textContent = "¥" + hours * selectedCoach.price;
-    detailEl.textContent = selectedCoach.id + " ｜ " + selectedCoach.price + " 元/小时 × " + hours + " 小时";
+    var base = hours * selectedCoach.price;
+    var disc = SITE_CONFIG.hourDiscounts[String(hours)] || 0;
+    var afterDisc = Math.round(base * (1 - disc));
+    var coupon = applyCoupon(afterDisc);
+    priceEl.textContent = "¥" + coupon.price;
+    var parts = [selectedCoach.id + " ｜ " + selectedCoach.price + " 元/小时 × " + hours + " 小时"];
+    if (disc > 0) parts.push("满时长优惠 " + Math.round(disc * 100) + "% -" + (base - afterDisc) + " 元");
+    if (coupon.text) parts.push(coupon.text);
+    detailEl.textContent = parts.join(" ｜ ");
     btn.disabled = false;
   }
 
@@ -830,8 +910,6 @@
 
     lastErrorKey.spar = null;
     detailEl.classList.remove("error");
-    var hours = parseInt($("spar-hours").value, 10);
-    var ids = matchedPlayerIds();
     if (!selectedSpar) {
       priceEl.textContent = "--";
       detailEl.textContent = "暂无匹配陪玩，请联系客服";
@@ -839,26 +917,32 @@
       return;
     }
     var sel = $("spar-hours").value;
-    var priceText, detailText;
+    var basePrice, detailParts;
     if (sel === "3wins") {
       var p3 = selectedSpar.priceFirst3 || 0;
-      priceText = "¥" + p3;
-      detailText = selectedSpar.id + " ｜ 抢三 " + p3 + " 元";
+      basePrice = p3;
+      detailParts = [selectedSpar.id + " ｜ 抢三 " + p3 + " 元"];
     } else if (sel === "5wins") {
       var p5 = selectedSpar.priceFirst5 || 0;
-      priceText = "¥" + p5;
-      detailText = selectedSpar.id + " ｜ 抢五 " + p5 + " 元";
+      basePrice = p5;
+      detailParts = [selectedSpar.id + " ｜ 抢五 " + p5 + " 元"];
     } else if (sel === "10wins") {
       var p10 = selectedSpar.priceFirst10 || 0;
-      priceText = "¥" + p10;
-      detailText = selectedSpar.id + " ｜ 抢十 " + p10 + " 元";
+      basePrice = p10;
+      detailParts = [selectedSpar.id + " ｜ 抢十 " + p10 + " 元"];
     } else {
+      var hours = parseInt(sel, 10);
       var rate = selectedSpar.price || SITE_CONFIG.sparPricePerHour;
-      priceText = "¥" + hours * rate;
-      detailText = selectedSpar.id + " ｜ " + rate + " 元/小时 × " + hours + " 小时";
+      var base = hours * rate;
+      var disc = SITE_CONFIG.hourDiscounts[String(hours)] || 0;
+      basePrice = Math.round(base * (1 - disc));
+      detailParts = [selectedSpar.id + " ｜ " + rate + " 元/小时 × " + hours + " 小时"];
+      if (disc > 0) detailParts.push("满时长优惠 " + Math.round(disc * 100) + "% -" + (base - basePrice) + " 元");
     }
-    priceEl.textContent = priceText;
-    detailEl.textContent = detailText;
+    var coupon = applyCoupon(basePrice);
+    priceEl.textContent = "¥" + coupon.price;
+    if (coupon.text) detailParts.push(coupon.text);
+    detailEl.textContent = detailParts.join(" ｜ ");
     btn.disabled = false;
   }
 
@@ -885,11 +969,19 @@
     if (activeTab === "coach") {
       if (!selectedCoach) return "";
       var coachHours = parseInt($("coach-hours").value, 10);
+      var cBase = coachHours * selectedCoach.price;
+      var cDisc = SITE_CONFIG.hourDiscounts[String(coachHours)] || 0;
+      var cAfter = Math.round(cBase * (1 - cDisc));
+      var cCoupon = applyCoupon(cAfter);
+      var cNotes = [];
+      if (cDisc > 0) cNotes.push("满时长优惠" + Math.round(cDisc * 100) + "%");
+      if (cCoupon.text) cNotes.push(cCoupon.text);
       return "【街霸6游戏教学】老师：" + selectedCoach.id +
         " ｜ 教学角色：" + selectedCoach.teachingChars.join("、") +
         " ｜ 时长：" + coachHours + "小时" +
         " ｜ 教学价格：" + selectedCoach.price + " 元/小时" +
-        " ｜ 预估价格：" + coachHours * selectedCoach.price + " 元";
+        (cNotes.length ? " ｜ " + cNotes.join("，") : "") +
+        " ｜ 预估价格：" + cCoupon.price + " 元";
     }
 
     if (activeTab === "spar") {
@@ -898,19 +990,24 @@
       var sparRate = selectedSpar ? (selectedSpar.price || SITE_CONFIG.sparPricePerHour) : SITE_CONFIG.sparPricePerHour;
       var durationLabel = $("spar-hours").selectedOptions[0].textContent;
       var sparSel = $("spar-hours").value;
-      var sparTotal = sparSel === "3wins"
-        ? (selectedSpar ? (selectedSpar.priceFirst3 || 0) : 0)
-        : sparSel === "5wins"
-          ? (selectedSpar ? (selectedSpar.priceFirst5 || 0) : 0)
-          : sparSel === "10wins"
-            ? (selectedSpar ? (selectedSpar.priceFirst10 || 0) : 0)
-            : parseInt($("spar-hours").value, 10) * sparRate;
+      var sBase;
+      if (sparSel === "3wins") sBase = selectedSpar ? (selectedSpar.priceFirst3 || 0) : 0;
+      else if (sparSel === "5wins") sBase = selectedSpar ? (selectedSpar.priceFirst5 || 0) : 0;
+      else if (sparSel === "10wins") sBase = selectedSpar ? (selectedSpar.priceFirst10 || 0) : 0;
+      else {
+        var sH = parseInt(sparSel, 10);
+        var sRaw = sH * sparRate;
+        var sDisc = SITE_CONFIG.hourDiscounts[String(sH)] || 0;
+        sBase = Math.round(sRaw * (1 - sDisc));
+      }
+      var sCoupon = applyCoupon(sBase);
       return "【街霸6对练陪玩】操作模式：" + $("spar-mode").value +
         " ｜ 角色：" + sparChar +
         " ｜ 目标段位：" + sparRank +
         (selectedSpar ? " ｜ 当前选择：" + selectedSpar.id : "") +
         " ｜ 时长：" + durationLabel +
-        " ｜ 预估价格：" + sparTotal + " 元";
+        (sCoupon.text ? " ｜ " + sCoupon.text : "") +
+        " ｜ 预估价格：" + sCoupon.price + " 元";
     }
     return "";
   }
@@ -1001,6 +1098,10 @@
 
     $("coach-hours").addEventListener("change", updateCoachQuote);
     $("coach-char-filter").addEventListener("change", renderCoachTeachers);
+    $("btn-coupon-coach").addEventListener("click", function () { handleRedeem("coach"); });
+    $("coupon-input-coach").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") handleRedeem("coach");
+    });
     $("td-select").addEventListener("click", function () {
       if (currentTeacherDetail) selectedCoach = currentTeacherDetail;
       $("teacher-detail-modal").hidden = true;
@@ -1025,6 +1126,10 @@
     $("spar-rank").addEventListener("change", function () {
       renderSparPlayers();
       updateSparQuote();
+    });
+    $("btn-coupon-spar").addEventListener("click", function () { handleRedeem("spar"); });
+    $("coupon-input-spar").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") handleRedeem("spar");
     });
 
     $("btn-order-boost").addEventListener("click", placeOrder);
@@ -1088,6 +1193,7 @@
     renderSparPlayers();
     updateSparQuote();
     renderCoachTeachers();
+    refreshCouponStatus();
   }
 
   if (document.readyState === "loading") {

@@ -246,6 +246,14 @@ fieldset.field legend {
 .quote-detail.error { color: var(--danger); }
 .quote-note { color: var(--muted); font-size: 12px; margin-top: 6px; }
 
+/* ---------- 优惠券 ---------- */
+.coupon-box { margin-top: 14px; }
+.coupon-row { display: flex; gap: 8px; }
+.coupon-row .input { flex: 1; min-height: 40px; }
+.coupon-status { font-size: 12px; margin-top: 6px; color: var(--muted); min-height: 16px; }
+.coupon-status.coupon-ok { color: var(--good); }
+.coupon-status.coupon-error { color: var(--danger); }
+
 /* ---------- 按钮 ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;

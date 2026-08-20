@@ -119,6 +119,7 @@
               <option value="1">1小时</option>
               <option value="2">2小时</option>
               <option value="3">3小时</option>
+              <option value="4">4小时</option>
               <option value="5">5小时</option>
               <option value="10">10小时</option>
             </select>
@@ -127,6 +128,14 @@
             <label class="lbl">当前选择老师</label>
             <p id="coach-selected" class="hint">点老师卡片查看详情并选择</p>
           </div>
+        </div>
+
+        <div class="coupon-box">
+          <div class="coupon-row">
+            <input id="coupon-input-coach" class="input" placeholder="输入兑换码领取优惠券">
+            <button type="button" class="btn" id="btn-coupon-coach">领取</button>
+          </div>
+          <p class="coupon-status" id="coupon-status-coach"></p>
         </div>
 
         <div class="quote">
@@ -153,6 +162,7 @@
               <option value="10wins">抢十</option>
               <option value="2">2小时</option>
               <option value="3">3小时</option>
+              <option value="4">4小时</option>
               <option value="5">5小时</option>
             </select>
           </div>
@@ -177,6 +187,14 @@
           <span class="player-list-title" id="player-list-title">打手列表</span>
         </div>
         <div class="player-list" id="spar-player-list"></div>
+
+        <div class="coupon-box">
+          <div class="coupon-row">
+            <input id="coupon-input-spar" class="input" placeholder="输入兑换码领取优惠券">
+            <button type="button" class="btn" id="btn-coupon-spar">领取</button>
+          </div>
+          <p class="coupon-status" id="coupon-status-spar"></p>
+        </div>
 
         <div class="quote">
           <div class="quote-label">预估价格</div>

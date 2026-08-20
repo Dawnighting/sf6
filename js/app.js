@@ -1050,7 +1050,7 @@
         }
       }
       var sCoupon = sBase == null ? { price: null, text: "" } : applyCoupon(sBase);
-      return "【街霸6对练陪玩】操作模式：" + $("spar-mode").value +
+      return "【街霸6对练陪玩】操作模式：" + ($("spar-mode").value || "不限") +
         " ｜ 角色：" + sparChar +
         " ｜ 目标段位：" + sparRank +
         (selectedSpar ? " ｜ 当前选择：" + selectedSpar.id : "") +

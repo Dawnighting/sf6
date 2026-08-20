@@ -275,6 +275,30 @@
         priceFirst5: 50,
         priceFirst10: 80,
         avatar: "images/daji-avatar.png"
+      },
+      {
+        id: "蓝色鸟",
+        mode: ["经典"],
+        characters: [
+          { name: "本田", rankLabel: "M2000", value: 2000 },
+          { name: "肯", rankLabel: "M2000", value: 2000 },
+          { name: "维嘉", rankLabel: "M2000", value: 2000 },
+          { name: "卢克", rankLabel: "M1900", value: 1900 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "杰米", rankLabel: "M1800", value: 1800 },
+          { name: "嘉米", rankLabel: "M1800", value: 1800 },
+          { name: "朱莉", rankLabel: "M1700", value: 1700 },
+          { name: "桑吉尔夫", rankLabel: "M1700", value: 1700 },
+          { name: "ED", rankLabel: "M1600", value: 1600 },
+          { name: "特瑞", rankLabel: "M1600", value: 1600 },
+          { name: "DJ", rankLabel: "M1600", value: 1600 },
+          { name: "英格丽德", rankLabel: "M1600", value: 1600 }
+        ],
+        price: 40,
+        priceFirst5: 15,
+        priceFirst10: 30,
+        avatar: "images/bluebird-avatar.jpg"
       }
     ],
 
@@ -453,6 +477,29 @@
         teachingChars: ["肯"],
         price: 100,
         avatar: "images/daji-avatar.png"
+      },
+      {
+        id: "蓝色鸟",
+        mode: ["经典"],
+        levels: [
+          { name: "本田", rankLabel: "M2000", value: 2000 },
+          { name: "肯", rankLabel: "M2000", value: 2000 },
+          { name: "维嘉", rankLabel: "M2000", value: 2000 },
+          { name: "卢克", rankLabel: "M1900", value: 1900 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "杰米", rankLabel: "M1800", value: 1800 },
+          { name: "嘉米", rankLabel: "M1800", value: 1800 },
+          { name: "朱莉", rankLabel: "M1700", value: 1700 },
+          { name: "桑吉尔夫", rankLabel: "M1700", value: 1700 },
+          { name: "ED", rankLabel: "M1600", value: 1600 },
+          { name: "特瑞", rankLabel: "M1600", value: 1600 },
+          { name: "DJ", rankLabel: "M1600", value: 1600 },
+          { name: "英格丽德", rankLabel: "M1600", value: 1600 }
+        ],
+        teachingChars: ["本田", "肯", "维嘉", "卢克", "舞", "隆", "杰米", "嘉米"],
+        price: 60,
+        avatar: "images/bluebird-avatar.jpg"
       }
     ],
 

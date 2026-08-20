@@ -154,7 +154,7 @@
           { name: "杰米", rankLabel: "M2000", value: 2000 }
         ],
         price: 70,
-        avatarLabel: "逝去"
+        avatar: "images/shi-qu-avatar.jfif"
       },
       {
         id: "道斯克斯",
@@ -292,7 +292,7 @@
         ],
         teachingChars: ["杰米"],
         price: 70,
-        avatarLabel: "逝去"
+        avatar: "images/shi-qu-avatar.jfif"
       },
       {
         id: "道斯克斯",
@@ -306,6 +306,25 @@
         ],
         teachingChars: ["本田", "维嘉", "舞", "肯", "沙加特"],
         price: 70
+      },
+      {
+        id: "超究极混沌暗影之狼狗",
+        mode: ["经典"],
+        levels: [
+          { name: "杰米", rankLabel: "M2250", value: 2250 },
+          { name: "金柏莉", rankLabel: "M2100", value: 2100 },
+          { name: "拉希德", rankLabel: "M2000", value: 2000 },
+          { name: "英格丽德", rankLabel: "M1900", value: 1900 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
+          { name: "亚思敏", rankLabel: "M1800", value: 1800 },
+          { name: "豪鬼", rankLabel: "M1800", value: 1800 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "特瑞", rankLabel: "M1700", value: 1700 },
+          { name: "维嘉", rankLabel: "M1700", value: 1700 }
+        ],
+        teachingChars: ["杰米", "金柏莉", "拉希德", "英格丽德", "舞", "亚思敏", "豪鬼", "隆", "特瑞", "维嘉"],
+        price: 80,
+        avatar: "images/langgou-avatar.jfif"
       }
     ],
 

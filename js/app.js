@@ -222,13 +222,17 @@
         var label = g.names.length === 1 ? g.names[0] + " " + g.rankLabel : "多角色" + g.rankLabel;
         return '<span class="chip chip-match">' + escapeHtml(label) + "</span>";
       }).join("");
+      if (groups.length === 0) chips = '<span class="chip">角色待补充</span>';
       if (extra > 0) chips += '<span class="chip chip-more">+' + extra + "</span>";
+      var teachLine = t.teachingChars && t.teachingChars.length
+        ? '<div class="teacher-teach">教学：' + escapeHtml(t.teachingChars.join("、")) + "</div>"
+        : '<div class="teacher-teach">教学角色待补充</div>';
       card.innerHTML =
         '<div class="player-avatar">' + (t.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(t.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(t.id) + "</div>" +
         '<div class="player-mode">' + escapeHtml(t.mode.join(" / ")) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
-        '<div class="teacher-teach">教学：' + escapeHtml(t.teachingChars.join("、")) + "</div>" +
+        teachLine +
         '<div class="teacher-price">¥' + t.price + "/小时</div>";
       card.addEventListener("click", function () {
         openTeacherDetail(t);
@@ -271,6 +275,12 @@
       row.appendChild(names);
       levelsEl.appendChild(row);
     });
+    if (levelsEl.children.length === 0) {
+      var emptyLevels = document.createElement("p");
+      emptyLevels.className = "pd-names";
+      emptyLevels.textContent = "角色待补充";
+      levelsEl.appendChild(emptyLevels);
+    }
 
     $("td-characters").textContent = t.teachingChars.join("、");
     $("teacher-detail-modal").hidden = false;
@@ -408,6 +418,11 @@
   function renderSparPlayers() {
     var list = $("spar-player-list");
     var matched = allSparPlayers().filter(playerMatches);
+    matched.sort(function (a, b) {
+      var pa = a.price == null ? Infinity : a.price;
+      var pb = b.price == null ? Infinity : b.price;
+      return pa - pb;
+    });
     var title = $("player-list-title");
     if (title) title.textContent = "打手列表（匹配 " + matched.length + " 人）";
     var rankFilter = getSparRankFilter();
@@ -432,6 +447,7 @@
         var cls = valueMatches(rankFilter, g.value) ? "chip chip-match" : "chip";
         return '<span class="' + cls + '">' + escapeHtml(label) + "</span>";
       }).join("");
+      if (groups.length === 0) chips = '<span class="chip">角色待补充</span>';
       if (extra > 0) chips += '<span class="chip chip-more">+' + extra + "</span>";
       var extras = [];
       if (p.priceFirst3 != null) extras.push("抢三 " + p.priceFirst3);
@@ -496,6 +512,12 @@
       row.appendChild(names);
       charsEl.appendChild(row);
     });
+    if (charsEl.children.length === 0) {
+      var emptyChars = document.createElement("p");
+      emptyChars.className = "pd-names";
+      emptyChars.textContent = "角色待补充";
+      charsEl.appendChild(emptyChars);
+    }
 
     $("player-detail-modal").hidden = false;
   }

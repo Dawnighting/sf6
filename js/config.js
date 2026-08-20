@@ -129,7 +129,8 @@
         ],
         price: 100,
         priceFirst5: 30,
-        priceFirst10: 60
+        priceFirst10: 60,
+        avatar: "images/gaowang-avatar.jfif"
       },
       {
         id: "昕缘刀妹",
@@ -226,7 +227,18 @@
           { name: "传奇随机", rankLabel: "M2000+", value: 2000 }
         ],
         price: 150,
+        priceFirst5: 60,
+        priceFirst10: 120,
         avatar: "images/dible-avatar.jfif"
+      },
+      {
+        id: "德州夏洛特",
+        mode: ["经典"],
+        characters: [],
+        price: 100,
+        priceFirst5: 40,
+        priceFirst10: 80,
+        avatar: "images/xialuote-avatar.jfif"
       }
     ],
 
@@ -282,7 +294,8 @@
           { name: "亚思敏", rankLabel: "M1800", value: 1800 }
         ],
         teachingChars: ["拉希德", "阿里克斯", "亚思敏"],
-        price: 100
+        price: 100,
+        avatar: "images/gaowang-avatar.jfif"
       },
       {
         id: "昕缘刀妹",
@@ -364,6 +377,14 @@
         teachingChars: ["ED", "艾莲娜", "舞", "杰米", "特瑞", "隆", "布兰卡", "英格丽德"],
         price: 150,
         avatar: "images/dible-avatar.jfif"
+      },
+      {
+        id: "德州夏洛特",
+        mode: ["经典"],
+        levels: [],
+        teachingChars: [],
+        price: 100,
+        avatar: "images/xialuote-avatar.jfif"
       }
     ],
 

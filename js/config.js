@@ -129,7 +129,7 @@
       },
       {
         id: "昕缘刀妹",
-        mode: ["经典", "现代"],
+        mode: ["经典"],
         characters: [
           { name: "杰米", rankLabel: "M1900", value: 1900 },
           { name: "艾莲娜", rankLabel: "M1900", value: 1900 },
@@ -152,6 +152,39 @@
         ],
         price: 70,
         avatarLabel: "逝去"
+      },
+      {
+        id: "道斯克斯",
+        mode: ["经典", "现代"],
+        characters: [
+          { name: "本田", rankLabel: "M2100", value: 2100 },
+          { name: "维嘉", rankLabel: "M2100", value: 2100 },
+          { name: "舞", rankLabel: "M1900", value: 1900 },
+          { name: "肯", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 }
+        ],
+        price: 70
+      },
+      {
+        id: "BB06",
+        mode: ["经典", "现代"],
+        characters: [
+          { name: "肯", rankLabel: "M1950", value: 1950 },
+          { name: "豪鬼", rankLabel: "M1700", value: 1700 },
+          { name: "隆", rankLabel: "M1700", value: 1700 },
+          { name: "卢克", rankLabel: "M1700", value: 1700 },
+          { name: "嘉米", rankLabel: "M1700", value: 1700 },
+          { name: "特瑞", rankLabel: "M1700", value: 1700 },
+          { name: "艾德", rankLabel: "M1700", value: 1700 },
+          { name: "维嘉", rankLabel: "M1700", value: 1700 },
+          { name: "阿里克斯", rankLabel: "M1700", value: 1700 },
+          { name: "沙加特", rankLabel: "M1700", value: 1700 },
+          { name: "英格丽德", rankLabel: "M1700", value: 1700 },
+          { name: "杰米", rankLabel: "M1700", value: 1700 }
+        ],
+        price: null,
+        priceFirst5: 40,
+        priceFirst10: 70
       }
     ],
 
@@ -211,7 +244,7 @@
       },
       {
         id: "昕缘刀妹",
-        mode: ["经典", "现代"],
+        mode: ["经典"],
         levels: [
           { name: "杰米", rankLabel: "M1900", value: 1900 },
           { name: "艾莲娜", rankLabel: "M1900", value: 1900 },
@@ -236,6 +269,19 @@
         teachingChars: ["杰米"],
         price: 70,
         avatarLabel: "逝去"
+      },
+      {
+        id: "道斯克斯",
+        mode: ["经典", "现代"],
+        levels: [
+          { name: "本田", rankLabel: "M2100", value: 2100 },
+          { name: "维嘉", rankLabel: "M2100", value: 2100 },
+          { name: "舞", rankLabel: "M1900", value: 1900 },
+          { name: "肯", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 }
+        ],
+        teachingChars: ["本田", "维嘉", "舞", "肯", "沙加特"],
+        price: 70
       }
     ],
 

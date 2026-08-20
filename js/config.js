@@ -142,7 +142,16 @@
           { name: "沙加特", rankLabel: "M1800", value: 1800 },
           { name: "亚思敏", rankLabel: "M1800", value: 1800 }
         ],
-        price: 60
+        price: 70
+      },
+      {
+        id: "一切终将逝去",
+        mode: ["现代"],
+        characters: [
+          { name: "杰米", rankLabel: "M2000", value: 2000 }
+        ],
+        price: 70,
+        avatarLabel: "逝去"
       }
     ],
 
@@ -216,7 +225,17 @@
           { name: "亚思敏", rankLabel: "M1800", value: 1800 }
         ],
         teachingChars: ["杰米", "艾莲娜"],
-        price: 60
+        price: 70
+      },
+      {
+        id: "一切终将逝去",
+        mode: ["现代"],
+        levels: [
+          { name: "杰米", rankLabel: "M2000", value: 2000 }
+        ],
+        teachingChars: ["杰米"],
+        price: 70,
+        avatarLabel: "逝去"
       }
     ],
 

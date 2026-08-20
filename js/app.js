@@ -214,7 +214,7 @@
     teachers.forEach(function (t) {
       var card = document.createElement("div");
       card.className = "player-card coach-card" + (selectedCoach === t ? " player-selected" : "");
-      var avatar = escapeHtml(String(t.id || "?").slice(0, 2).toUpperCase());
+      var avatar = escapeHtml(defaultAvatarText(t));
       var groups = groupChars(t);
       var visible = groups.slice(0, 3);
       var extra = groups.length - visible.length;
@@ -250,7 +250,7 @@
       img.className = "player-avatar-img";
       box.appendChild(img);
     } else {
-      box.textContent = String(t.id || "?").slice(0, 2).toUpperCase();
+      box.textContent = defaultAvatarText(t);
     }
     $("td-id").textContent = t.id;
     $("td-mode").textContent = "操作模式：" + t.mode.join(" / ");
@@ -310,6 +310,11 @@
     return String(s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
+  }
+
+  /* 默认头像文字：优先用 avatarLabel（如"逝去"），否则取 ID 前两个字 */
+  function defaultAvatarText(item) {
+    return String((item.avatarLabel || item.id || "?")).slice(0, 2).toUpperCase();
   }
 
   function getSparRankFilter() {
@@ -415,7 +420,7 @@
     matched.forEach(function (p) {
       var card = document.createElement("div");
       card.className = "player-card coach-card" + (selectedSpar === p ? " player-selected" : "");
-      var avatar = escapeHtml(String(p.id || "?").slice(0, 2).toUpperCase());
+      var avatar = escapeHtml(defaultAvatarText(p));
       var groups = groupChars(p);
       var visible = groups.slice(0, 4);
       var extra = groups.length - visible.length;
@@ -459,7 +464,7 @@
       img.className = "player-avatar-img";
       box.appendChild(img);
     } else {
-      box.textContent = String(p.id || "?").slice(0, 2).toUpperCase();
+      box.textContent = defaultAvatarText(p);
     }
 
     $("pd-id").textContent = p.id;

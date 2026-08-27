@@ -181,6 +181,11 @@ body {
 .player-note {
   font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.4;
 }
+.player-bio {
+  font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4;
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
 .player-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 12px 0; grid-column: 1 / -1; }
 
 /* ---------- 添加打手弹窗 ---------- */

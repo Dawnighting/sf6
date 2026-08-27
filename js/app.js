@@ -222,13 +222,15 @@
       var teachLine = t.teachingChars && t.teachingChars.length
         ? '<div class="teacher-teach">教学：' + escapeHtml(t.teachingChars.join("、")) + "</div>"
         : '<div class="teacher-teach">教学角色待补充</div>';
+      var tBioLine = '<div class="player-bio">' + (t.bio ? escapeHtml(t.bio) : "") + "</div>";
       card.innerHTML =
         '<div class="player-avatar">' + (t.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(t.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(t.id) + "</div>" +
         '<div class="player-mode">' + modeHtml(t.mode) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         teachLine +
-        '<div class="teacher-price">¥' + t.price + "/小时</div>";
+        '<div class="teacher-price">¥' + t.price + "/小时</div>" +
+        tBioLine;
       card.addEventListener("click", function () {
         openTeacherDetail(t);
       });
@@ -465,6 +467,7 @@
       var noteLine = p.priceNote
         ? '<div class="player-note">' + escapeHtml(p.priceNote) + "</div>"
         : "";
+      var bioLine = '<div class="player-bio">' + (p.bio ? escapeHtml(p.bio) : "") + "</div>";
       card.innerHTML =
         '<div class="player-avatar">' + (p.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(p.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
@@ -472,7 +475,8 @@
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="teacher-price">' + (p.price != null ? "¥" + p.price + "/小时" : "小时价待定") + "</div>" +
         extraLine +
-        noteLine;
+        noteLine +
+        bioLine;
       card.addEventListener("click", function () {
         openPlayerDetail(p);
       });

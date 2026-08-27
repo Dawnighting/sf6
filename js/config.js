@@ -65,6 +65,7 @@
 
     // 对练陪玩资料库（可继续往数组里加人）
     // characters 里 value 是用于筛选的数值：大师写 M 分；其他段位写段位分值（如钻石5=805）
+    // bio = 打手介绍（选填，卡片上预留了介绍位置，填了就会显示）
     sparPlayers: [
       {
         id: "cq",
@@ -221,6 +222,7 @@
         mode: ["经典"],
         characters: [
           { name: "ED", rankLabel: "M2300", value: 2300 },
+          { name: "深红毒蛇", rankLabel: "M2200", value: 2200 },
           { name: "艾莲娜", rankLabel: "M2200", value: 2200 },
           { name: "舞", rankLabel: "M2200", value: 2200 },
           { name: "杰米", rankLabel: "M2200", value: 2200 },
@@ -430,6 +432,7 @@
         mode: ["经典"],
         levels: [
           { name: "ED", rankLabel: "M2300", value: 2300 },
+          { name: "深红毒蛇", rankLabel: "M2200", value: 2200 },
           { name: "艾莲娜", rankLabel: "M2200", value: 2200 },
           { name: "舞", rankLabel: "M2200", value: 2200 },
           { name: "杰米", rankLabel: "M2200", value: 2200 },
@@ -439,7 +442,7 @@
           { name: "英格丽德", rankLabel: "M2100", value: 2100 },
           { name: "传奇随机", rankLabel: "M2000+", value: 2000 }
         ],
-        teachingChars: ["ED", "艾莲娜", "舞", "杰米", "特瑞", "隆", "布兰卡", "英格丽德"],
+        teachingChars: ["ED", "深红毒蛇", "艾莲娜", "舞", "杰米", "特瑞", "隆", "布兰卡", "英格丽德"],
         price: 150,
         avatar: "images/dible-avatar.jfif"
       },

@@ -214,7 +214,7 @@
           { name: "维嘉", rankLabel: "M1700", value: 1700 }
         ],
         price: 80,
-        avatar: "images/langgou-avatar.jfif"
+        avatar: "images/langgou-avatar.jpg"
       },
       {
         id: "Dible",
@@ -285,8 +285,8 @@
         mode: ["经典"],
         characters: [
           { name: "本田", rankLabel: "M2000", value: 2000 },
-          { name: "肯", rankLabel: "M2000", value: 2000 },
-          { name: "维嘉", rankLabel: "M2000", value: 2000 },
+          { name: "肯", rankLabel: "M1900", value: 1900 },
+          { name: "维嘉", rankLabel: "M1900", value: 1900 },
           { name: "卢克", rankLabel: "M1900", value: 1900 },
           { name: "舞", rankLabel: "M1800", value: 1800 },
           { name: "隆", rankLabel: "M1800", value: 1800 },
@@ -421,9 +421,9 @@
           { name: "特瑞", rankLabel: "M1700", value: 1700 },
           { name: "维嘉", rankLabel: "M1700", value: 1700 }
         ],
-        teachingChars: ["杰米", "金柏莉", "拉希德", "英格丽德", "舞", "亚思敏", "豪鬼", "隆", "特瑞", "维嘉"],
+        teachingChars: ["杰米", "金柏莉", "拉希德", "英格丽德", "亚思敏"],
         price: 80,
-        avatar: "images/langgou-avatar.jfif"
+        avatar: "images/langgou-avatar.jpg"
       },
       {
         id: "Dible",
@@ -488,8 +488,8 @@
         mode: ["经典"],
         levels: [
           { name: "本田", rankLabel: "M2000", value: 2000 },
-          { name: "肯", rankLabel: "M2000", value: 2000 },
-          { name: "维嘉", rankLabel: "M2000", value: 2000 },
+          { name: "肯", rankLabel: "M1900", value: 1900 },
+          { name: "维嘉", rankLabel: "M1900", value: 1900 },
           { name: "卢克", rankLabel: "M1900", value: 1900 },
           { name: "舞", rankLabel: "M1800", value: 1800 },
           { name: "隆", rankLabel: "M1800", value: 1800 },

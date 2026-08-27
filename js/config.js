@@ -152,7 +152,7 @@
         price: 70,
         priceFirst5: 30,
         priceFirst10: 50,
-        avatar: "images/xinyuan-avatar.jfif"
+        avatar: "images/xinyuan-avatar.jpg"
       },
       {
         id: "一切终将逝去",
@@ -161,7 +161,7 @@
           { name: "杰米", rankLabel: "M2000", value: 2000 }
         ],
         price: 70,
-        avatar: "images/shi-qu-avatar.jfif"
+        avatar: "images/shi-qu-avatar.jpg"
       },
       {
         id: "道斯克斯",
@@ -380,7 +380,7 @@
         ],
         teachingChars: ["杰米", "艾莲娜"],
         price: 70,
-        avatar: "images/xinyuan-avatar.jfif"
+        avatar: "images/xinyuan-avatar.jpg"
       },
       {
         id: "一切终将逝去",
@@ -390,7 +390,7 @@
         ],
         teachingChars: ["杰米"],
         price: 70,
-        avatar: "images/shi-qu-avatar.jfif"
+        avatar: "images/shi-qu-avatar.jpg"
       },
       {
         id: "道斯克斯",

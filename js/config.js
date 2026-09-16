@@ -77,6 +77,7 @@
           { name: "隆", rankLabel: "M1800", value: 1800 },
           { name: "豪鬼", rankLabel: "M1800", value: 1800 },
           { name: "杰米", rankLabel: "M1800", value: 1800 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
           { name: "卢克", rankLabel: "M1800", value: 1800 },
           { name: "DJ", rankLabel: "M1800", value: 1800 },
           { name: "ED", rankLabel: "M1800", value: 1800 },
@@ -305,6 +306,36 @@
         priceFirst5: 15,
         priceFirst10: 30,
         avatar: "images/bluebird-avatar.jpg"
+      },
+      {
+        id: "派大星",
+        mode: ["经典"],
+        characters: [
+          { name: "卢克", rankLabel: "M2300", value: 2300 },
+          { name: "亚思敏", rankLabel: "M2000", value: 2000 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "特瑞", rankLabel: "M1800", value: 1800 },
+          { name: "肯", rankLabel: "M1800", value: 1800 }
+        ],
+        price: 100,
+        priceFirst5: 30,
+        priceFirst10: 60,
+        avatar: "images/paidaxing-avatar.jfif"
+      },
+      {
+        id: "WildFree原野",
+        mode: ["经典"],
+        characters: [
+          { name: "深红毒蛇", rankLabel: "M2100+", value: 2100 },
+          { name: "艾莲娜", rankLabel: "M2100+", value: 2100 },
+          { name: "特瑞", rankLabel: "M2100+", value: 2100 },
+          { name: "隆", rankLabel: "M2100+", value: 2100 }
+        ],
+        price: 100,
+        priceFirst5: 40,
+        priceFirst10: 80,
+        avatar: "images/wildfree-avatar.jfif"
       }
     ],
 
@@ -323,6 +354,7 @@
           { name: "隆", rankLabel: "M1800", value: 1800 },
           { name: "豪鬼", rankLabel: "M1800", value: 1800 },
           { name: "杰米", rankLabel: "M1800", value: 1800 },
+          { name: "舞", rankLabel: "M1800", value: 1800 },
           { name: "卢克", rankLabel: "M1800", value: 1800 },
           { name: "DJ", rankLabel: "M1800", value: 1800 },
           { name: "ED", rankLabel: "M1800", value: 1800 },
@@ -332,7 +364,7 @@
           { name: "维嘉", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
-        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "卢克", "DJ", "ED", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
+        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "舞", "卢克", "DJ", "ED", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
         price: 70,
         avatar: "images/cq-avatar.png"
       },
@@ -508,6 +540,34 @@
         teachingChars: ["本田", "肯", "维嘉", "卢克", "舞", "隆", "杰米", "嘉米"],
         price: 60,
         avatar: "images/bluebird-avatar.jpg"
+      },
+      {
+        id: "派大星",
+        mode: ["经典"],
+        levels: [
+          { name: "卢克", rankLabel: "M2300", value: 2300 },
+          { name: "亚思敏", rankLabel: "M2000", value: 2000 },
+          { name: "隆", rankLabel: "M1800", value: 1800 },
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "特瑞", rankLabel: "M1800", value: 1800 },
+          { name: "肯", rankLabel: "M1800", value: 1800 }
+        ],
+        teachingChars: ["卢克", "亚思敏"],
+        price: 100,
+        avatar: "images/paidaxing-avatar.jfif"
+      },
+      {
+        id: "WildFree原野",
+        mode: ["经典"],
+        levels: [
+          { name: "深红毒蛇", rankLabel: "M2100+", value: 2100 },
+          { name: "艾莲娜", rankLabel: "M2100+", value: 2100 },
+          { name: "特瑞", rankLabel: "M2100+", value: 2100 },
+          { name: "隆", rankLabel: "M2100+", value: 2100 }
+        ],
+        teachingChars: ["深红毒蛇", "艾莲娜", "特瑞", "隆"],
+        price: 100,
+        avatar: "images/wildfree-avatar.jfif"
       }
     ],
 

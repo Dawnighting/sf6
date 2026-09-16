@@ -85,7 +85,8 @@
           { name: "JP", rankLabel: "M1800", value: 1800 },
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
           { name: "维嘉", rankLabel: "M1800", value: 1800 },
-          { name: "沙加特", rankLabel: "M1800", value: 1800 }
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "桑吉尔夫", rankLabel: "M1700", value: 1700 }
         ],
         avatar: "images/cq-avatar.png",
         price: 70,
@@ -362,9 +363,10 @@
           { name: "JP", rankLabel: "M1800", value: 1800 },
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
           { name: "维嘉", rankLabel: "M1800", value: 1800 },
-          { name: "沙加特", rankLabel: "M1800", value: 1800 }
+          { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "桑吉尔夫", rankLabel: "M1700", value: 1700 }
         ],
-        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "舞", "卢克", "DJ", "ED", "本田", "JP", "英格丽德", "维嘉", "沙加特"],
+        teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "舞", "卢克", "DJ", "ED", "本田", "JP", "英格丽德", "维嘉", "沙加特", "阿鬼", "深红毒蛇", "玛丽莎"],
         price: 70,
         avatar: "images/cq-avatar.png"
       },

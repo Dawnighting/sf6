@@ -1,5 +1,5 @@
-/* 街霸6 服务站 Service Worker：离线缓存 */
-var CACHE = "sf6-v4.1";
+/* 街霸6 服务站 Service Worker：网络优先 + 离线兜底 */
+var CACHE = "sf6-v4.3";
 var ASSETS = [
   "./",
   "./index.html",
@@ -52,13 +52,13 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
   e.respondWith(
-    caches.match(e.request).then(function (hit) {
-      return hit || fetch(e.request).then(function (res) {
-        var copy = res.clone();
-        caches.open(CACHE).then(function (cache) { cache.put(e.request, copy); });
-        return res;
-      }).catch(function () {
-        return caches.match("./index.html");
+    fetch(e.request).then(function (res) {
+      var copy = res.clone();
+      caches.open(CACHE).then(function (cache) { cache.put(e.request, copy); });
+      return res;
+    }).catch(function () {
+      return caches.match(e.request).then(function (hit) {
+        return hit || caches.match("./index.html");
       });
     })
   );

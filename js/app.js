@@ -228,6 +228,7 @@
       card.innerHTML =
         '<div class="player-avatar">' + (t.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(t.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(t.id) + "</div>" +
+        proBadge(t) +
         '<div class="player-mode">' + modeHtml(t.mode) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         teachLine +
@@ -258,6 +259,7 @@
     $("td-id").textContent = t.id;
     $("td-mode").textContent = "操作模式：" + t.mode.join(" / ");
     $("td-price").textContent = "教学价格：" + t.price + " 元/小时";
+    $("td-pro").textContent = t.pro ? t.pro + "签约职业选手" : "";
 
     var levelsEl = $("td-levels");
     levelsEl.innerHTML = "";
@@ -331,6 +333,11 @@
     return modes.map(function (m) {
       return m === "现代" ? '<span class="mode-modern">现代</span>' : escapeHtml(m);
     }).join(" / ");
+  }
+
+  /* 职业选手标识 */
+  function proBadge(item) {
+    return item.pro ? '<div class="pro-badge">职业选手</div>' : "";
   }
 
   function getSparRankFilter() {
@@ -482,6 +489,7 @@
       card.innerHTML =
         '<div class="player-avatar">' + (p.avatar ? '<img class="player-avatar-img" src="' + escapeHtml(p.avatar) + '" alt="">' : avatar) + "</div>" +
         '<div class="player-id">' + escapeHtml(p.id) + "</div>" +
+        proBadge(p) +
         '<div class="player-mode">' + modeHtml(p.mode) + "</div>" +
         '<div class="player-chips">' + chips + "</div>" +
         '<div class="teacher-price">' + (p.price != null ? "¥" + p.price + "/小时" : "小时价待定") + "</div>" +
@@ -522,6 +530,7 @@
     if (p.priceFirst10 != null) extras.push("抢十：" + p.priceFirst10 + " 元");
     $("pd-extra").textContent = extras.join(" ｜ ");
     $("pd-note").textContent = p.priceNote || "";
+    $("pd-pro").textContent = p.pro ? p.pro + "签约职业选手" : "";
 
     var charsEl = $("pd-chars");
     charsEl.innerHTML = "";

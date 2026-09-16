@@ -136,7 +136,8 @@
         price: 100,
         priceFirst5: 30,
         priceFirst10: 60,
-        avatar: "images/gaowang-avatar.jfif"
+        avatar: "images/gaowang-avatar.jfif",
+        pro: "HJK"
       },
       {
         id: "昕缘刀妹",
@@ -240,7 +241,8 @@
         price: 150,
         priceFirst5: 60,
         priceFirst10: 120,
-        avatar: "images/dible-avatar.jfif"
+        avatar: "images/dible-avatar.jfif",
+        pro: "TEC"
       },
       {
         id: "德州夏洛特",
@@ -325,7 +327,8 @@
         price: 100,
         priceFirst5: 30,
         priceFirst10: 60,
-        avatar: "images/paidaxing-avatar.jfif"
+        avatar: "images/paidaxing-avatar.jfif",
+        pro: "HJK"
       },
       {
         id: "WildFree原野",
@@ -401,7 +404,8 @@
         ],
         teachingChars: ["拉希德", "阿里克斯", "亚思敏"],
         price: 100,
-        avatar: "images/gaowang-avatar.jfif"
+        avatar: "images/gaowang-avatar.jfif",
+        pro: "HJK"
       },
       {
         id: "昕缘刀妹",
@@ -484,7 +488,8 @@
         ],
         teachingChars: ["ED", "深红毒蛇", "艾莲娜", "舞", "杰米", "特瑞", "隆", "布兰卡", "英格丽德"],
         price: 150,
-        avatar: "images/dible-avatar.jfif"
+        avatar: "images/dible-avatar.jfif",
+        pro: "TEC"
       },
       {
         id: "德州夏洛特",
@@ -562,7 +567,8 @@
         ],
         teachingChars: ["卢克", "亚思敏"],
         price: 100,
-        avatar: "images/paidaxing-avatar.jfif"
+        avatar: "images/paidaxing-avatar.jfif",
+        pro: "HJK"
       },
       {
         id: "WildFree原野",

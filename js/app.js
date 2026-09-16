@@ -194,6 +194,8 @@
   function renderCoachTeachers() {
     var list = $("coach-player-list");
     var teachers = allCoachTeachers().filter(coachCharMatches);
+    /* 默认按最高角色分数从高到低排序 */
+    teachers.sort(function (a, b) { return maxLevelValue(b) - maxLevelValue(a); });
     var title = $("coach-list-title");
     if (title) title.textContent = "老师列表（" + teachers.length + " 人）";
     if (teachers.length === 0) {
@@ -374,6 +376,15 @@
   }
 
   /* 按分段分组：同分段多个角色合并显示（如"多角色 M1800"） */
+  function maxLevelValue(item) {
+    var levels = item.levels || item.characters || [];
+    var max = 0;
+    levels.forEach(function (c) {
+      if (typeof c.value === "number" && c.value > max) max = c.value;
+    });
+    return max;
+  }
+
   function groupChars(player) {
     var groups = [];
     var map = {};

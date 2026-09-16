@@ -86,6 +86,9 @@
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
           { name: "维嘉", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "阿鬼", rankLabel: "M1800", value: 1800 },
+          { name: "玛丽莎", rankLabel: "M1800", value: 1800 },
+          { name: "深红毒蛇", rankLabel: "M1800", value: 1800 },
           { name: "桑吉尔夫", rankLabel: "M1700", value: 1700 }
         ],
         avatar: "images/cq-avatar.png",
@@ -328,10 +331,10 @@
         id: "WildFree原野",
         mode: ["经典"],
         characters: [
-          { name: "深红毒蛇", rankLabel: "M2100+", value: 2100 },
-          { name: "艾莲娜", rankLabel: "M2100+", value: 2100 },
-          { name: "特瑞", rankLabel: "M2100+", value: 2100 },
-          { name: "隆", rankLabel: "M2100+", value: 2100 }
+          { name: "深红毒蛇", rankLabel: "M2250", value: 2250 },
+          { name: "艾莲娜", rankLabel: "M2250", value: 2250 },
+          { name: "特瑞", rankLabel: "M2250", value: 2250 },
+          { name: "隆", rankLabel: "M2250", value: 2250 }
         ],
         price: 100,
         priceFirst5: 40,
@@ -364,6 +367,9 @@
           { name: "英格丽德", rankLabel: "M1800", value: 1800 },
           { name: "维嘉", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 },
+          { name: "阿鬼", rankLabel: "M1800", value: 1800 },
+          { name: "玛丽莎", rankLabel: "M1800", value: 1800 },
+          { name: "深红毒蛇", rankLabel: "M1800", value: 1800 },
           { name: "桑吉尔夫", rankLabel: "M1700", value: 1700 }
         ],
         teachingChars: ["拉希德", "亚思敏", "肯", "隆", "豪鬼", "杰米", "舞", "卢克", "DJ", "ED", "本田", "JP", "英格丽德", "维嘉", "沙加特", "阿鬼", "深红毒蛇", "玛丽莎"],
@@ -562,10 +568,10 @@
         id: "WildFree原野",
         mode: ["经典"],
         levels: [
-          { name: "深红毒蛇", rankLabel: "M2100+", value: 2100 },
-          { name: "艾莲娜", rankLabel: "M2100+", value: 2100 },
-          { name: "特瑞", rankLabel: "M2100+", value: 2100 },
-          { name: "隆", rankLabel: "M2100+", value: 2100 }
+          { name: "深红毒蛇", rankLabel: "M2250", value: 2250 },
+          { name: "艾莲娜", rankLabel: "M2250", value: 2250 },
+          { name: "特瑞", rankLabel: "M2250", value: 2250 },
+          { name: "隆", rankLabel: "M2250", value: 2250 }
         ],
         teachingChars: ["深红毒蛇", "艾莲娜", "特瑞", "隆"],
         price: 100,

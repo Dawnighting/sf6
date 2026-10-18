@@ -180,7 +180,7 @@
           { name: "肯", rankLabel: "M1800", value: 1800 },
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
-        price: 70,
+        price: 80,
         avatar: "images/daosikesi-avatar.png"
       },
       {
@@ -449,7 +449,7 @@
           { name: "沙加特", rankLabel: "M1800", value: 1800 }
         ],
         teachingChars: ["本田", "维嘉", "舞", "肯", "沙加特"],
-        price: 70,
+        price: 80,
         avatar: "images/daosikesi-avatar.png"
       },
       {

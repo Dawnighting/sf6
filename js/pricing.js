@@ -173,8 +173,17 @@
       }
     }
 
-    /* 所有非传奇上分订单统一应用最低起步价，包含相邻段位和大师小分差。 */
-    price = Math.max(SITE_CONFIG.boostMinimumPrice, Math.round(price));
+    /* 经典模式黄金以上：间隔 2 颗星起使用 20 元起步价，其余最低 15 元。 */
+    var minimumPrice = SITE_CONFIG.boostMinimumPrice;
+    if (
+      input.mode === "经典" &&
+      curInfo.order >= 50 && curInfo.order < 100 &&
+      tgtInfo.order < 100 &&
+      (tgtScore - curScore) >= 2
+    ) {
+      minimumPrice = SITE_CONFIG.goldPlusTwoStarMinimumPrice;
+    }
+    price = Math.max(minimumPrice, Math.round(price));
 
     /* 6. 现代模式加价（传奇固定价已在前面提前返回，不参与） */
     if (input.mode === "现代") {

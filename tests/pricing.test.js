@@ -18,10 +18,23 @@ function quote(curRank, curStar, tgtRank, tgtStar, extra = {}) {
 
 const goldFiveToPlatinumOne = quote("gold", 5, "platinum", 1);
 assert.equal(goldFiveToPlatinumOne.ok, true);
-assert.equal(goldFiveToPlatinumOne.price, 15);
+assert.equal(goldFiveToPlatinumOne.price, 20);
 
 const goldFourToPlatinumOne = quote("gold", 4, "platinum", 1);
-assert.equal(goldFourToPlatinumOne.price, 15);
+assert.equal(goldFourToPlatinumOne.price, 20);
+
+const goldOneToGoldTwo = quote("gold", 1, "gold", 2);
+const goldOneToGoldThree = quote("gold", 1, "gold", 3);
+assert.equal(goldOneToGoldTwo.price, 15);
+assert.equal(goldOneToGoldThree.price, 20);
+
+const platinumFourToPlatinumFive = quote("platinum", 4, "platinum", 5);
+const platinumThreeToPlatinumFive = quote("platinum", 3, "platinum", 5);
+assert.equal(platinumFourToPlatinumFive.price, 15);
+assert.equal(platinumThreeToPlatinumFive.price, 20);
+
+const silverFiveToGoldTwo = quote("silver", 5, "gold", 2);
+assert.equal(silverFiveToGoldTwo.price, 15);
 
 const modernGoldFiveToPlatinumOne = quote("gold", 5, "platinum", 1, { mode: "现代" });
 assert.equal(modernGoldFiveToPlatinumOne.price, 35);
@@ -72,9 +85,21 @@ for (const mode of ["经典", "现代"]) {
       });
       if (!result.ok) continue;
       validCombinations += 1;
-      const expectedMinimum = mode === "现代"
+      let expectedMinimum = mode === "现代"
         ? SITE_CONFIG.modernBoostMinimumPrice
         : SITE_CONFIG.boostMinimumPrice;
+      const curInfo = RANK_ORDER.find((rank) => rank.value === cur.rank);
+      const tgtInfo = RANK_ORDER.find((rank) => rank.value === tgt.rank);
+      const curScore = Pricing.pointScore(cur.rank, cur.star, cur.m);
+      const tgtScore = Pricing.pointScore(tgt.rank, tgt.star, tgt.m);
+      if (
+        mode === "经典" &&
+        curInfo.order >= 50 && curInfo.order < 100 &&
+        tgtInfo.order < 100 &&
+        (tgtScore - curScore) >= 2
+      ) {
+        expectedMinimum = SITE_CONFIG.goldPlusTwoStarMinimumPrice;
+      }
       if (result.price < expectedMinimum) {
         belowMinimum.push({
           mode,

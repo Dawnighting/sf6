@@ -178,7 +178,10 @@
 
     /* 6. 现代模式加价（传奇固定价已在前面提前返回，不参与） */
     if (input.mode === "现代") {
-      price = Math.round(price * SITE_CONFIG.modernPriceMultiplier);
+      price = Math.max(
+        SITE_CONFIG.modernBoostMinimumPrice,
+        Math.round(price * SITE_CONFIG.modernPriceMultiplier)
+      );
     }
 
     return {

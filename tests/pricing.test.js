@@ -24,7 +24,12 @@ const goldFourToPlatinumOne = quote("gold", 4, "platinum", 1);
 assert.equal(goldFourToPlatinumOne.price, 15);
 
 const modernGoldFiveToPlatinumOne = quote("gold", 5, "platinum", 1, { mode: "现代" });
-assert.equal(modernGoldFiveToPlatinumOne.price, 23);
+assert.equal(modernGoldFiveToPlatinumOne.price, 35);
+
+const classicGoldOneToDiamondFive = quote("gold", 1, "diamond", 5);
+const modernGoldOneToDiamondFive = quote("gold", 1, "diamond", 5, { mode: "现代" });
+assert.equal(classicGoldOneToDiamondFive.price, 30);
+assert.equal(modernGoldOneToDiamondFive.price, 45);
 
 const masterTinyGain = quote("master", 1, "master", 1, {
   curM: 1500,
@@ -67,7 +72,10 @@ for (const mode of ["经典", "现代"]) {
       });
       if (!result.ok) continue;
       validCombinations += 1;
-      if (result.price < SITE_CONFIG.boostMinimumPrice) {
+      const expectedMinimum = mode === "现代"
+        ? SITE_CONFIG.modernBoostMinimumPrice
+        : SITE_CONFIG.boostMinimumPrice;
+      if (result.price < expectedMinimum) {
         belowMinimum.push({
           mode,
           cur: `${cur.rank}${cur.rank === "master" ? ` M${cur.m}` : `${cur.star}星`}`,
@@ -82,4 +90,7 @@ for (const mode of ["经典", "现代"]) {
 assert.ok(validCombinations > 0);
 assert.deepEqual(belowMinimum, [], `发现低于起步价的组合：${JSON.stringify(belowMinimum)}`);
 
-console.log(`Pricing tests passed: ${validCombinations} valid rank combinations, minimum price ${SITE_CONFIG.boostMinimumPrice}.`);
+console.log(
+  `Pricing tests passed: ${validCombinations} valid rank combinations, ` +
+  `classic minimum ${SITE_CONFIG.boostMinimumPrice}, modern minimum ${SITE_CONFIG.modernBoostMinimumPrice}.`
+);

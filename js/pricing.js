@@ -168,10 +168,13 @@
         var tgtRow = tableRow(input.tgtRank, input.tgtStar);
         var tgtPrice = tgtRow ? tgtRow.price : 0;
         var tgtWins = tgtRow ? tgtRow.wins : 0;
-        price = Math.max(0, Math.round(curRow.price - tgtPrice));
+        price = Math.round(curRow.price - tgtPrice);
         wins = Math.max(1, Math.round(curRow.wins - tgtWins));
       }
     }
+
+    /* 所有非传奇上分订单统一应用最低起步价，包含相邻段位和大师小分差。 */
+    price = Math.max(SITE_CONFIG.boostMinimumPrice, Math.round(price));
 
     /* 6. 现代模式加价（传奇固定价已在前面提前返回，不参与） */
     if (input.mode === "现代") {

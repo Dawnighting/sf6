@@ -1,5 +1,5 @@
 /* 街霸6 服务站 Service Worker：网络优先 + 离线兜底 */
-var CACHE = "sf6-v4.6";
+var CACHE = "sf6-v5.1";
 var ASSETS = [
   "./",
   "./index.html",
@@ -19,6 +19,7 @@ var ASSETS = [
   "./images/daosikesi-avatar.png",
   "./images/dible-avatar.jfif",
   "./images/gaowang-avatar.jfif",
+  "./images/huoyun-avatar.jpg",
   "./images/langgou-avatar.jfif",
   "./images/langgou-avatar.jpg",
   "./images/lovebanana-avatar.png",

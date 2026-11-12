@@ -1,5 +1,5 @@
 /* 街霸6 服务站 Service Worker：网络优先 + 离线兜底 */
-var CACHE = "sf6-v5.1";
+var CACHE = "sf6-v5.2";
 var ASSETS = [
   "./",
   "./index.html",

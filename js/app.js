@@ -197,8 +197,12 @@
   function renderCoachTeachers() {
     var list = $("coach-player-list");
     var teachers = allCoachTeachers().filter(coachCharMatches);
-    /* 默认按最高角色分数从高到低排序 */
-    teachers.sort(function (a, b) { return maxLevelValue(b) - maxLevelValue(a); });
+    /* 默认按最高角色分数从高到低排序；同分时职业选手优先 */
+    teachers.sort(function (a, b) {
+      var scoreDiff = maxLevelValue(b) - maxLevelValue(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      return (b.pro ? 1 : 0) - (a.pro ? 1 : 0);
+    });
     var title = $("coach-list-title");
     if (title) title.textContent = "老师列表（" + teachers.length + " 人）";
     if (teachers.length === 0) {
@@ -448,6 +452,9 @@
       var pa = a.price == null ? Infinity : a.price;
       var pb = b.price == null ? Infinity : b.price;
       if (pa !== pb) return pa - pb;
+      /* 同价时职业选手优先 */
+      var proDiff = (b.pro ? 1 : 0) - (a.pro ? 1 : 0);
+      if (proDiff !== 0) return proDiff;
       var ra = a.sortPriority != null ? a.sortPriority : 1;
       var rb = b.sortPriority != null ? b.sortPriority : 1;
       return ra - rb;
